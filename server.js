@@ -44,12 +44,23 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public')); // Sirve imágenes y otros archivos estáticos
+// Configuración de middleware para servir archivos estáticos primero
+app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static('public')); 
 
-// Ruta para servir login.html en la raíz '/'
+// Luego, define la ruta para la página de inicio
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('Error al conectar a la base de datos:', err);
+    } else {
+        console.log('Conexión exitosa a la base de datos');
+        connection.release(); // Libera la conexión después de verificar
+    }
 });
 
 
