@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const docentesTable = document.getElementById('docentesTable').getElementsByTagName('tbody')[0];
 
     // URL base de tu API en Railway
-    const apiBaseUrl = 'https://tu-backend-en-railway.com/api';
+    const apiBaseUrl = 'https://control-asistencia-docentes.onrender.com/';  // Reemplaza con tu URL real
 
     // Función para cargar los datos de los docentes desde la API
     function loadDocentes() {
         fetch(`${apiBaseUrl}/docentes`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error en la respuesta: ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 docentesTable.innerHTML = '';
                 data.forEach(docente => {
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                 });
             })
-            .catch(error => console.error('Error al obtener los docentes:', error));
+            .catch(error => console.error('Error al cargar docentes:', error));
     }
 
     // Función para manejar el envío del formulario
@@ -48,8 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
             Telefono: formData.get('telefono'),
             Fecha_ingreso: formData.get('fecha_ingreso'),
         };
-    
-        console.log('Datos enviados:', data); // Verifica los datos
     
         if (mode === 'add') {
             fetch(`${apiBaseUrl}/docentes`, {
@@ -83,47 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formCodigo').value = '';
             }).catch(error => console.error('Error en la actualización:', error));
         }
-    });
-
-    // Búsqueda de docente por código
-    document.getElementById('searchDocenteBtn').addEventListener('click', function() {
-        const codigoBuscado = document.getElementById('searchCodigo').value.trim();
-        const docentesTable = document.getElementById('docentesTable');
-        const filas = docentesTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-        let encontrado = false;
-
-        // Limpiar resultados anteriores
-        const resultadoBody = document.getElementById('resultadoBody');
-        resultadoBody.innerHTML = '';
-
-        if (codigoBuscado === '') {
-            alert('Por favor, ingresa un código.');
-            return;
-        }
-
-        fetch(`${apiBaseUrl}/docentes/${codigoBuscado}`)
-            .then(response => response.json())
-            .then(docente => {
-                if (docente) {
-                    const nuevaFila = document.createElement('tr');
-                    nuevaFila.innerHTML = `
-                        <td>${docente.Codigo}</td>
-                        <td>${docente.Nombres}</td>
-                        <td>${docente.Apellidos}</td>
-                        <td>${docente.Fecha_nacimiento}</td>
-                        <td>${docente.Telefono}</td>
-                        <td>${docente.Correo_electronico}</td>
-                        <td>${docente.Fecha_ingreso}</td>
-                    `;
-                    resultadoBody.appendChild(nuevaFila); // Añadir la fila al resultado
-                    document.getElementById('resultadoBusqueda').classList.remove('hidden'); // Mostrar el resultado
-                    encontrado = true;
-                }
-            })
-            .catch(error => {
-                console.error('Error al buscar el docente:', error);
-                alert('Error al buscar el docente.');
-            });
     });
 
     // Función para editar un docente
