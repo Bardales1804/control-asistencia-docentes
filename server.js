@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000; // Usa el puerto de la variable de entorno si está definido
+
+// Configuración de fecha y hora para los escaneos
 const now = new Date();
 const year = now.getFullYear();
 const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
@@ -16,29 +18,16 @@ const minutes = String(now.getMinutes()).padStart(2, '0');
 const seconds = String(now.getSeconds()).padStart(2, '0');
 const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora local
 
-// Ruta para servir login.html en la raíz '/'
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-
-
-// Configuración de middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
-app.use(cors());
-
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'bardales1804',
-    database: 'CCCP'
+    host: process.env.DB_HOST || 'localhost', // Usa las variables de entorno si están definidas
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || 'bardales1804',
+    database: process.env.DB_NAME || 'CCCP',
+    port: process.env.DB_PORT || 3306
 });
 
-// Función para ejecutar consultas
+// Función para ejecutar consultas a la base de datos
 const query = (sql, values) => {
     return new Promise((resolve, reject) => {
         pool.query(sql, values, (error, results) => {
@@ -48,7 +37,21 @@ const query = (sql, values) => {
     });
 };
 
-module.exports = pool; 
+// Configuración de middleware
+app.use(cors({
+    origin: '*', // Cambia '*' por la URL de tu frontend si es necesario
+    credentials: true
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public')); // Sirve imágenes y otros archivos estáticos
+
+// Ruta para servir login.html en la raíz '/'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
 
 
 // =====================
