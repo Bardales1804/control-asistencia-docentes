@@ -32,21 +32,11 @@ app.use(cors());
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', 
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'qCuLHkjNozzijLtZndywbzriKjmyZDcd',
-    database: process.env.DB_NAME || 'railway',
-    port: process.env.DB_PORT || 10266
+    user: process.env.DB_USER || 'root', 
+    password: process.env.DB_PASSWORD || 'qCuLHkjNozzijLtZndywbzriKjmyZDcd', 
+    database: process.env.DB_NAME || 'railway', 
+    port: process.env.DB_PORT || 10266 
 });
-
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Error conectando a la base de datos:', err);
-    } else {
-        console.log('Conexión a la base de datos establecida con éxito');
-        connection.release();
-    }
-});
-
 
 
 // Función para ejecutar consultas

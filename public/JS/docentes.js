@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('docentesForm');
     const docentesTable = document.getElementById('docentesTable').getElementsByTagName('tbody')[0];
 
-    
-    
+    // URL base de tu API en Railway
+    const apiBaseUrl = 'https://tu-backend-en-railway.com/api';
 
     // Función para cargar los datos de los docentes desde la API
     function loadDocentes() {
-        fetch('/api/docentes')
+        fetch(`${apiBaseUrl}/docentes`)
             .then(response => response.json())
             .then(data => {
                 docentesTable.innerHTML = '';
@@ -27,11 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         </td>
                     `;
                 });
-            });
+            })
+            .catch(error => console.error('Error al obtener los docentes:', error));
     }
 
-
-    
     // Función para manejar el envío del formulario
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Datos enviados:', data); // Verifica los datos
     
         if (mode === 'add') {
-            fetch('/api/docentes', {
+            fetch(`${apiBaseUrl}/docentes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,16 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.reset();
                 document.getElementById('formMode').value = 'add';
                 document.getElementById('formCodigo').value = '';
-            });
+            }).catch(error => console.error('Error al crear el docente:', error));
         } else {
-            fetch(`/api/docentes/${codigo}`, {
+            fetch(`${apiBaseUrl}/docentes/${codigo}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             }).then(response => {
-                console.log('Respuesta del servidor:', response); // Verifica la respuesta del servidor
                 if (!response.ok) {
                     throw new Error('Error al actualizar docente');
                 }
@@ -83,13 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.reset();
                 document.getElementById('formMode').value = 'add';
                 document.getElementById('formCodigo').value = '';
-            }).catch(error => {
-                console.error('Error en la actualización:', error);
-            });
+            }).catch(error => console.error('Error en la actualización:', error));
         }
     });
-    
 
+    // Búsqueda de docente por código
     document.getElementById('searchDocenteBtn').addEventListener('click', function() {
         const codigoBuscado = document.getElementById('searchCodigo').value.trim();
         const docentesTable = document.getElementById('docentesTable');
@@ -105,55 +101,34 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Buscar el código en las filas de la tabla de docentes
-        for (let i = 0; i < filas.length; i++) {
-            const celdas = filas[i].getElementsByTagName('td');
-            if (celdas[0].textContent === codigoBuscado) {
-                const nuevaFila = filas[i].cloneNode(true); // Clonar la fila encontrada
-                resultadoBody.appendChild(nuevaFila); // Añadir la fila al resultado
-                document.getElementById('resultadoBusqueda').classList.remove('hidden'); // Mostrar el resultado
-                encontrado = true;
-                break;
-            }
-        }
-
-        if (!encontrado) {
-            alert('Docente no encontrado.');
-        }
-    });
-
-    // Función para mostrar los datos del docente en la tabla
-    function mostrarDocente(docente) {
-        const tbody = document.getElementById('docentesTable').querySelector('tbody');
-        tbody.innerHTML = ''; // Limpia la tabla
-        const row = `
-            <tr>
-                <td>${docente.Codigo}</td>
-                <td>${docente.Nombres}</td>
-                <td>${docente.Apellidos}</td>
-                <td>${docente.Fecha_nacimiento}</td>
-                <td>${docente.Telefono}</td>
-                <td>${docente.Correo_electronico}</td>
-                <td>${docente.Fecha_ingreso}</td>
-            </tr>
-        `;
-        tbody.innerHTML = row; // Añade la fila del docente encontrado
-    }
-    
-    document.getElementById('toggleButton').addEventListener('click', function() {
-        const tableContainer = document.getElementById('docentesTableContainer');
-        if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
-            tableContainer.style.display = 'block';
-            this.textContent = 'Ocultar lista de docentes'; // Cambia el texto del botón
-        } else {
-            tableContainer.style.display = 'none';
-            this.textContent = 'Ver lista de docentes'; // Vuelve al texto original
-        }
+        fetch(`${apiBaseUrl}/docentes/${codigoBuscado}`)
+            .then(response => response.json())
+            .then(docente => {
+                if (docente) {
+                    const nuevaFila = document.createElement('tr');
+                    nuevaFila.innerHTML = `
+                        <td>${docente.Codigo}</td>
+                        <td>${docente.Nombres}</td>
+                        <td>${docente.Apellidos}</td>
+                        <td>${docente.Fecha_nacimiento}</td>
+                        <td>${docente.Telefono}</td>
+                        <td>${docente.Correo_electronico}</td>
+                        <td>${docente.Fecha_ingreso}</td>
+                    `;
+                    resultadoBody.appendChild(nuevaFila); // Añadir la fila al resultado
+                    document.getElementById('resultadoBusqueda').classList.remove('hidden'); // Mostrar el resultado
+                    encontrado = true;
+                }
+            })
+            .catch(error => {
+                console.error('Error al buscar el docente:', error);
+                alert('Error al buscar el docente.');
+            });
     });
 
     // Función para editar un docente
     window.editDocente = function(codigo) {
-        fetch(`/api/docentes/${codigo}`)
+        fetch(`${apiBaseUrl}/docentes/${codigo}`)
             .then(response => response.json())
             .then(docente => {
                 document.getElementById('codigo').value = docente.Codigo;
@@ -170,9 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para eliminar un docente
     window.deleteDocente = function(codigo) {
-        fetch(`/api/docentes/${codigo}`, {
+        fetch(`${apiBaseUrl}/docentes/${codigo}`, {
             method: 'DELETE',
-        }).then(() => loadDocentes());
+        }).then(() => loadDocentes())
+          .catch(error => console.error('Error al eliminar docente:', error));
     };
 
     // Cargar los docentes al iniciar
