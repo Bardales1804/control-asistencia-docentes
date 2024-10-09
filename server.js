@@ -27,7 +27,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
-app.use(cors());
+app.use(cors({
+    origin: '*'  // O puedes poner la URL de tu frontend si prefieres limitarlo
+}));
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
