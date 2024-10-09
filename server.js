@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;  // Cambié esta línea para que use el puerto de Railway si está disponible
 const now = new Date();
 const year = now.getFullYear();
 const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+
 // Configuración de middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,10 +31,11 @@ app.use(cors());
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
-    host: 'localhost',
+    host: 'autorack.proxy.rlwy.net', 
     user: 'root',
-    password: 'bardales1804',
-    database: 'CCCP'
+    password: 'qCuLHkjNozzijLtZndywbzriKjmyZDcd',
+    database: 'railway',
+    port: 10266
 });
 
 // Función para ejecutar consultas
@@ -46,7 +48,7 @@ const query = (sql, values) => {
     });
 };
 
-module.exports = pool; 
+module.exports = pool;
 
 
 // =====================
