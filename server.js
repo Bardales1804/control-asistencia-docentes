@@ -4,27 +4,32 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 4000;
-
-// Configuración de la fecha y hora actual
+const port = process.env.PORT || 4000;  // Cambié esta línea para que use el puerto de Railway si está disponible
 const now = new Date();
 const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, '0'); 
+const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
 const day = String(now.getDate()).padStart(2, '0');
-const fechaEscaneo = `${year}-${month}-${day}`;
+const fechaEscaneo = `${year}-${month}-${day}`; // Formato YYYY-MM-DD en hora local
 
 const hour = String(now.getHours()).padStart(2, '0');
 const minutes = String(now.getMinutes()).padStart(2, '0');
 const seconds = String(now.getSeconds()).padStart(2, '0');
-const horaEscaneo = `${hour}:${minutes}:${seconds}`;
+const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora local
 
-// Middleware para procesar el body y servir archivos estáticos
+// Ruta para servir login.html en la raíz '/'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+
+// Configuración de middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
 app.use(cors());
 
-// Conexión a la base de datos MySQL con Railway
+// Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', 
     user: process.env.DB_USER || 'root',
@@ -42,7 +47,9 @@ pool.getConnection((err, connection) => {
     }
 });
 
-// Función para ejecutar consultas MySQL usando Promesas
+
+
+// Función para ejecutar consultas
 const query = (sql, values) => {
     return new Promise((resolve, reject) => {
         pool.query(sql, values, (error, results) => {
@@ -52,13 +59,11 @@ const query = (sql, values) => {
     });
 };
 
-// Servir el archivo `login.html` en la ruta raíz
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
+module.exports = pool;
+
 
 // =====================
-// CRUD API Docentes
+// Rutas de la API Docentes
 // =====================
 app.get('/api/docentes', async (req, res) => {
     try {
@@ -121,8 +126,9 @@ app.delete('/api/docentes/:codigo', async (req, res) => {
 });
 
 // =====================
-// CRUD API Horarios
+// Rutas de la API Horarios
 // =====================
+// Obtener todos los horarios (opcional)
 app.get('/api/horarios', async (req, res) => {
     try {
         const horarios = await query('SELECT * FROM Horarios');
@@ -132,6 +138,7 @@ app.get('/api/horarios', async (req, res) => {
     }
 });
 
+// Obtener horarios por código de docente
 app.get('/api/horarios/:codigo', async (req, res) => {
     try {
         const { codigo } = req.params;
@@ -142,6 +149,7 @@ app.get('/api/horarios/:codigo', async (req, res) => {
     }
 });
 
+// Crear un nuevo horario
 app.post('/api/horarios', async (req, res) => {
     try {
         const { Codigo, Dia_de_la_semana, Hora_entrada, Hora_salida } = req.body;
@@ -155,6 +163,7 @@ app.post('/api/horarios', async (req, res) => {
     }
 });
 
+// Actualizar un horario existente
 app.put('/api/horarios/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -172,6 +181,7 @@ app.put('/api/horarios/:id', async (req, res) => {
     }
 });
 
+// Eliminar un horario
 app.delete('/api/horarios/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -185,15 +195,18 @@ app.delete('/api/horarios/:id', async (req, res) => {
     }
 });
 
+
 // =====================
-// CRUD API Descansos
+// Rutas de la API Descansos
 // =====================
 app.post('/api/descansos', async (req, res) => {
     const { fecha, tipo_descanso, descripcion } = req.body;
+    console.log('Datos recibidos:', req.body); // Log para verificar los datos
     try {
         await query('INSERT INTO Descansos (Fecha, Tipo_descanso, Descripcion) VALUES (?, ?, ?)', [fecha, tipo_descanso, descripcion]);
         res.status(201).json({ success: true });
     } catch (error) {
+        console.error('Error al agregar descanso:', error);
         res.status(500).json({ error: 'Error al agregar descanso' });
     }
 });
@@ -208,72 +221,153 @@ app.get('/api/descansos', async (req, res) => {
         }));
         res.json(eventos);
     } catch (error) {
+        console.error('Error al obtener descansos:', error);
         res.status(500).json({ error: 'Error al obtener descansos' });
     }
 });
 
+
 // =====================
-// CRUD API Asistencias
+// Rutas de la API Asistencias
 // =====================
+// Ruta para registrar asistencias
 app.post('/asistencias', async (req, res) => {
-    const { Codigo } = req.body; 
-    const now = new Date(); 
-    const Fecha = now.toISOString().split('T')[0];
-    const Hora_de_entrada = now.toTimeString().split(' ')[0]; 
-    const Observaciones = 'Asistencia registrada automáticamente';
+    const { Codigo } = req.body; // El código escaneado
+    const now = new Date(); // Fecha y hora actual
+    const Fecha = now.toISOString().split('T')[0]; // Obtener solo la fecha en formato YYYY-MM-DD
+    const Hora_de_entrada = now.toTimeString().split(' ')[0]; // Obtener la hora actual en formato HH:MM:SS
+    const Observaciones = 'Asistencia registrada automáticamente por lector de código de barras'; // Observaciones automáticas
 
     try {
-        const asistenciaExistente = await query('SELECT * FROM asistencias WHERE Codigo = ? AND Fecha = ?', [Codigo, Fecha]);
+        // Verificar si ya existe una asistencia para este código y fecha
+        const asistenciaExistente = await query(
+            'SELECT * FROM asistencias WHERE Codigo = ? AND Fecha = ?',
+            [Codigo, Fecha]
+        );
 
         if (asistenciaExistente.length === 0) {
-            await query('INSERT INTO asistencias (Codigo, Fecha, Hora_de_entrada, Observaciones) VALUES (?, ?, ?, ?)', [Codigo, Fecha, Hora_de_entrada, Observaciones]);
+            // Si no existe, insertar nueva asistencia
+            await query(
+                'INSERT INTO asistencias (Codigo, Fecha, Hora_de_entrada, Observaciones) VALUES (?, ?, ?, ?)',
+                [Codigo, Fecha, Hora_de_entrada, Observaciones]
+            );
             res.status(200).json({ message: 'Asistencia registrada con éxito.' });
         } else {
-            await query('UPDATE asistencias SET Hora_de_entrada = ?, Observaciones = ? WHERE Codigo = ? AND Fecha = ?', [Hora_de_entrada, Observaciones, Codigo, Fecha]);
+            // Si ya existe, actualizar la asistencia
+            await query(
+                'UPDATE asistencias SET Hora_de_entrada = ?, Observaciones = ? WHERE Codigo = ? AND Fecha = ?',
+                [Hora_de_entrada, Observaciones, Codigo, Fecha]
+            );
             res.status(200).json({ message: 'Asistencia actualizada con éxito.' });
         }
     } catch (error) {
+        console.error('Error al registrar la asistencia:', error);
         res.status(500).json({ message: 'Error al registrar la asistencia.' });
     }
 });
 
+// Ruta para obtener todas las asistencias
+app.get('/api/asistencias', async (req, res) => {
+    const fecha = req.query.fecha;
+    console.log('Fecha recibida:', fecha);
+
+    let sql = 'SELECT * FROM asistencias';
+    let params = [];
+
+    if (fecha) {
+        sql += ' WHERE Fecha = ?';
+        params.push(fecha);
+    }
+
+    try {
+        const asistencias = await query(sql, params);
+        res.json(asistencias);
+    } catch (error) {
+        console.error('Error al obtener asistencias:', error);
+        res.status(500).json({ message: 'Error al obtener asistencias' });
+    }
+});
+
+
+
+
+
+
+
+
+
 // =====================
-// CRUD API Carnets
+// Rutas de la API Carnets
 // =====================
+
+// Endpoint para obtener todos los carnets con información del docente
 app.get('/carnets', async (req, res) => {
     try {
-        const carnets = await query(`SELECT carnets.*, Docentes.Nombres, Docentes.Apellidos FROM carnets JOIN Docentes ON carnets.Codigo = Docentes.Codigo`);
+        const carnets = await query(`
+            SELECT carnets.*, Docentes.Nombres, Docentes.Apellidos, Docentes.Correo_electronico
+            FROM carnets
+            JOIN Docentes ON carnets.Codigo = Docentes.Codigo
+        `);
         res.json(carnets);
     } catch (error) {
+        console.error('Error al obtener los carnets:', error);
         res.status(500).json({ message: 'Error al obtener los carnets.' });
     }
 });
 
+// Endpoint para crear un nuevo carnet
 app.post('/carnets', async (req, res) => {
     const { Codigo, No_carnet, Fecha_emision, Fecha_vencimiento, Descripcion } = req.body;
 
+    // Validar los datos
     if (!Codigo || !No_carnet || !Fecha_emision || !Fecha_vencimiento) {
         return res.status(400).json({ message: 'Faltan datos requeridos.' });
     }
 
     try {
+        // Verificar que el docente existe
         const docentes = await query('SELECT * FROM Docentes WHERE Codigo = ?', [Codigo]);
         if (docentes.length === 0) {
             return res.status(404).json({ message: 'Docente no encontrado.' });
         }
 
+        // Insertar el carnet en la base de datos
         const result = await query(
             'INSERT INTO carnets (Codigo, No_carnet, Fecha_emision, Fecha_vencimiento, Descripcion) VALUES (?, ?, ?, ?, ?)',
             [Codigo, No_carnet, Fecha_emision, Fecha_vencimiento, Descripcion]
         );
         res.status(201).json({ message: 'Carnet creado exitosamente.', Id_carnet: result.insertId });
     } catch (error) {
-        res.status(500).json({ message: 'Error al crear el carnet.' });
+        console.error('Error al crear el carnet:', error);
+        if (error.code === 'ER_DUP_ENTRY') {
+            res.status(409).json({ message: 'El número de carnet ya existe.' });
+        } else {
+            res.status(500).json({ message: 'Error al crear el carnet.' });
+        }
     }
 });
 
+// Endpoint para eliminar un carnet por su ID
+app.delete('/carnets/:id_carnet', async (req, res) => {
+    const { id_carnet } = req.params;
+    try {
+        const result = await query('DELETE FROM carnets WHERE Id_carnet = ?', [id_carnet]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Carnet no encontrado.' });
+        }
+        res.json({ message: 'Carnet eliminado exitosamente.' });
+    } catch (error) {
+        console.error('Error al eliminar el carnet:', error);
+        res.status(500).json({ message: 'Error al eliminar el carnet.' });
+    }
+});
+
+
+
+
+
 // =====================
-// CRUD API Eventos
+// Rutas de la API Eventos
 // =====================
 app.get('/api/eventos', async (req, res) => {
     try {
@@ -297,9 +391,20 @@ app.post('/api/eventos', async (req, res) => {
     }
 });
 
+app.delete('/api/eventos/:id_evento', async (req, res) => {
+    try {
+        const { id_evento } = req.params;
+        await query('DELETE FROM Eventos WHERE Id_evento = ?', [id_evento]);
+        res.send('Evento eliminado');
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 // =====================
-// CRUD API Permisos
+// Rutas de la API Permisos
 // =====================
+// Obtener todos los permisos
 app.get('/api/permisos', async (req, res) => {
     try {
         const permisos = await query('SELECT * FROM Permisos');
@@ -309,6 +414,7 @@ app.get('/api/permisos', async (req, res) => {
     }
 });
 
+// Obtener permisos por código de docente
 app.get('/api/permisos/docente/:codigo', async (req, res) => {
     try {
         const { codigo } = req.params;
@@ -319,6 +425,22 @@ app.get('/api/permisos/docente/:codigo', async (req, res) => {
     }
 });
 
+// Obtener un permiso específico por ID
+app.get('/api/permisos/id/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [permiso] = await query('SELECT * FROM Permisos WHERE Id_permiso = ?', [id]);
+        if (permiso) {
+            res.json(permiso);
+        } else {
+            res.status(404).json({ message: 'Permiso no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Crear un nuevo permiso
 app.post('/api/permisos', async (req, res) => {
     try {
         const { Codigo, Fecha_permiso, Motivo, Descripcion } = req.body;
@@ -332,6 +454,7 @@ app.post('/api/permisos', async (req, res) => {
     }
 });
 
+// Actualizar un permiso existente
 app.put('/api/permisos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -350,6 +473,7 @@ app.put('/api/permisos/:id', async (req, res) => {
     }
 });
 
+// Eliminar un permiso
 app.delete('/api/permisos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -364,9 +488,11 @@ app.delete('/api/permisos/:id', async (req, res) => {
     }
 });
 
+
 // =====================
-// CRUD API Planilla
+// Rutas de la API Planilla
 // =====================
+// Obtener todas las planillas
 app.get('/api/planilla', async (req, res) => {
     try {
         const planillas = await query('SELECT * FROM Planilla');
@@ -376,6 +502,18 @@ app.get('/api/planilla', async (req, res) => {
     }
 });
 
+// Obtener planillas por código de docente
+app.get('/api/planilla/codigo/:codigo', async (req, res) => { // Ruta modificada
+    try {
+        const { codigo } = req.params;
+        const planillas = await query('SELECT * FROM Planilla WHERE Codigo = ?', [codigo]);
+        res.json(planillas);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Crear una nueva planilla
 app.post('/api/planilla', async (req, res) => {
     try {
         const { Codigo, Mes, Firma_planilla, Observaciones } = req.body;
@@ -392,9 +530,45 @@ app.post('/api/planilla', async (req, res) => {
     }
 });
 
+// Eliminar una planilla
+app.delete('/api/planilla/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await query('DELETE FROM Planilla WHERE Id = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Planilla no encontrada' });
+        }
+        res.json({ message: 'Planilla eliminada con éxito' });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// (Opcional) Actualizar una planilla
+app.put('/api/planilla/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { Mes, Firma_planilla, Observaciones } = req.body;
+        const result = await query(
+            'UPDATE Planilla SET Mes = ?, Firma_planilla = ?, Observaciones = ? WHERE Id = ?',
+            [Mes, Firma_planilla, Observaciones, id]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Planilla no encontrada' });
+        }
+        res.json({ message: 'Planilla actualizada con éxito' });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+app.use('/barcodes', express.static(path.join(__dirname, 'public', 'barcodes')));
+
+
 // =====================
 // Iniciar el servidor
 // =====================
 app.listen(port, '0.0.0.0', () => {
     console.log(`Servidor escuchando en el puerto ${port}`);
 });
+
