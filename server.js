@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 4000; // Usa el puerto de la variable de entorno si está definido
-
-// Configuración de fecha y hora para los escaneos
+const port = 4000;
 const now = new Date();
 const year = now.getFullYear();
 const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
@@ -18,16 +16,27 @@ const minutes = String(now.getMinutes()).padStart(2, '0');
 const seconds = String(now.getSeconds()).padStart(2, '0');
 const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora local
 
-// Configurar conexión a la base de datos MySQL utilizando un pool
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', 
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'PEbxzvrSiUpQsTDzsPNvOchfNYzpWlIk',
-    database: process.env.DB_NAME || 'railway',
-    port: process.env.DB_PORT || 12011
+// Ruta para servir login.html en la raíz '/'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-// Función para ejecutar consultas a la base de datos
+// Configuración de middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
+app.use(cors());
+
+// Configurar conexión a la base de datos MySQL utilizando un pool
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'bardales1804',
+    database: 'CCCP'
+});
+
+// Función para ejecutar consultas
 const query = (sql, values) => {
     return new Promise((resolve, reject) => {
         pool.query(sql, values, (error, results) => {
@@ -37,32 +46,7 @@ const query = (sql, values) => {
     });
 };
 
-// Configuración de middleware
-app.use(cors({
-    origin: '*', // Cambia '*' por la URL de tu frontend si es necesario
-    credentials: true
-}));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-// Configuración de middleware para servir archivos estáticos primero
-app.use(express.static(path.join(__dirname, 'public'))); 
-app.use(express.static('public')); 
-
-// Luego, define la ruta para la página de inicio
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-    } else {
-        console.log('Conexión exitosa a la base de datos');
-        connection.release(); // Libera la conexión después de verificar
-    }
-});
-
+module.exports = pool; 
 
 
 // =====================
