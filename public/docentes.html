@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+    <style>
+        body {
+            background-color: white; 
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-container {
+            display: flex;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .form-container {
+            display: none; /* Ocultamos el formulario inicialmente */
+            background: #fff;
+            padding: 1px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #ffff00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border: 2px solid #ffff00;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff6600;
+        }
+        .muro {
+            background-color: #f5f5f5; /* Color de fondo del muro */
+            border: 2px solid #ff6600; /* Borde del muro */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra para efecto 3D */
+            margin: 20px auto; /* Centrar el muro en la página */
+            max-width: 1200px; /* Ancho máximo */
+        }
+
+        .form-container {
+            display: none; /* Ocultamos el formulario inicialmente */
+            background: #fff;
+            padding: 1px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+        }
+                .muro {
+            background-color: white; /* Color de fondo del muro */
+            border: 2px solid #ff6600; /* Borde del muro */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra para efecto 3D */
+            margin: 20px auto; /* Centrar el muro en la página */
+            max-width: 1200px; /* Ancho máximo */
+        }
+
+        .table-container {
+            justify-content: center;
+            display: none; /* Inicialmente oculta */
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        table {
+            background-color: white;
+            color: black; 
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;  
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 2px solid #000;
+        }
+
+        th {
+            background-color: #ff6600;
+            color: white; 
+        }
+        .centered {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+        }
+        .update-button {
+    background-color: #4caf50; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.update-button:hover {
+    background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+}
+
+.delete-button {
+    background-color: blue; /* Rojo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: blue; /* Rojo más oscuro al pasar el mouse */
+}
+.hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="planilla.html">Planilla</a></li>
+                </ul>
+            </nav>
+
+            <header>
+                <img src="Img/logo2.jpg" alt="Logo Colegio" style="background: #000000; margin: 0 auto 0 25px; width: 100px;">
+                <h1>Gestión de Docentes - Colegio Ciencias Comerciales</h1>
+            </header>
+            <div class="muro">
+            <button id="addDocenteBtn" class="update-button" style="background-color: #ffff00; color: black;">➕ Agregar Docente</button>
+            <div class="search-container centered">
+            </div>
+            <div>
+                <input type="text" id="searchCodigo" placeholder="Buscar por código" required>
+                <button id="searchDocenteBtn" class="update-button" style="background-color: #ffff00; color: black;">🔍 Buscar</button>
+            </div>                
+            <div class="form-container" id="docentesFormContainer">
+                <form id="docentesForm">
+                    <input type="hidden" id="formMode" value="add">
+                    <input type="hidden" id="formCodigo" value="">
+                    
+                    <div class="form-group">
+                        <label for="codigo">Código:</label>
+                        <input type="text" id="codigo" name="codigo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" id="nombres" name="nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" id="apellidos" name="apellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="text" id="telefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo_electronico">Correo Electrónico:</label>
+                        <input type="text" id="correo_electronico" name="correo_electronico">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                        <input type="date" id="fecha_ingreso" name="fecha_ingreso" required>
+                    </div>
+                    <button type="submit">💾 Guardar</button>
+                </form>
+            </div>
+        </div>
+        <div id="resultadoBusqueda" class="hidden">
+            <h2>Docente encontrado:</h2>
+            <table id="resultadoTable" border="5">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Teléfono</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha de Ingreso</th>
+                    </tr>
+                </thead>
+                <tbody id="resultadoBody">
+                    <!-- Aquí se insertará el resultado -->
+                </tbody>
+            </table>
+        </div>
+    
+    
+        <button id="toggleButton">👁️ Ver lista de docentes</button>
+
+        <div class="table-container" id="docentesTableContainer">
+            <table id="docentesTable" border="5">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Teléfono</th>
+                            <th>Correo Electrónico</th>                
+                            <th>Fecha de Ingreso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se van a insertar las filas dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="js/docentes.js"></script>
+    <script>
+        document.getElementById('addDocenteBtn').onclick = function() {
+            document.getElementById('docentesFormContainer').style.display = 'block'; // Muestra el formulario
+            document.getElementById('docentesForm').reset(); // Limpia el formulario
+            document.getElementById('formMode').value = 'add'; // Configura el modo de formulario
+        };
+    </script>
+</body>
+</html>

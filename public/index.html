@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a ></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="/planilla.html">Planilla</a></li>
+                </ul>
+                <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Ciencias</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .text-column {
+            width: 65%;
+        }
+        .text-column h2 {
+            color: #0056b3;
+        }
+        .text-column p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .logo-column {
+            width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-column img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .logo-column {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-slider {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.image-slider img {
+    width: 100%;
+    height: auto;
+    display: none;
+    border-radius: 8px;
+}
+
+.image-slider img.active {
+    display: block;
+}
+
+.dots {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dot.active-dot {
+    background-color: #717171;
+}
+.logo-column {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-slider {
+    position: relative;
+    width: 850px; /* Ancho del carrusel aumentado */
+    height: 1100px; /* Altura del carrusel aumentada */
+    overflow: hidden;
+}
+
+.image-slider img {
+    width: 300%; /* Las imágenes ocuparán todo el ancho del carrusel */
+    height: 100%; /* Mantener la altura proporcional al contenedor */
+    display: none;
+    object-fit: cover; /* Asegura que la imagen mantenga su proporción sin deformarse */
+    border-radius: 8px;
+}
+
+.image-slider img.active {
+    display: block;
+}
+
+.dots {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dot.active-dot {
+    background-color: #717171;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⭐CREANDO PARA LA EDUCACIÓN⭐</h1>
+        <div class="logo-column">
+            <div class="image-slider">
+                <img src="Valores.jpg" alt="Logo del Colegio 1" class="active">
+                <img src="Colegioo.jpg" alt="Logo del Colegio 2" style="width: 2000px; height: 1100px;"class="active">
+                <img src="col.jpeg" alt="Logo del Colegio 3" style="width: 2000px; height: 1000px;" class="active">
+                <img src="entrada.jpeg" alt="Logo del Colegio 4" style="width: 850px; height: 1100px;" class="active">
+            </div>
+
+            <div class="dots">
+                <span class="dot active-dot" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        <div class="content">
+            <div class="text-column">
+                <h2 style="color: #ff6600;">Preprimaria y Primaria</h2>
+                <p>
+                    Se desarrollarán destrezas jugando y experimentando, con docentes capacitados y en constante actualización, en un ambiente digital enriquecido, con actividades que le harán sentir que aprender es divertido. 
+                </p>
+                <h2 style="color: #ff6600;">Ciclo de educación Básica</h2>
+                <p>
+                    La edad de la energía inagotable. En el #ColegioCiencias contamos con una metodología moderna que motiva el aprendizaje activo, permitiendo que los estudiantes sean los protagonistas de su proceso educativo. 
+                </p>
+                <h2 style="color: #ff6600;">Diversificado</h2>
+                <p>
+                    Nuestras carreras son: Perito Contador con Orientación en Computación, Bachilerato en Diseño Gráfico y Bachillerato en Ciencias y Letras con Orientación en Computación.      
+                </p>
+            </div>
+            <div class="logo-column">
+                <img src="cohete.png" alt="Logo del Colegio 1" style="width: 200px; height: 200px;">
+                <img src="adolecente.png" alt="Logo del Colegio 2" style="width: 200px; height: 200px;">
+                <img src="diploma.png" alt="Logo del Colegio 3" style="width: 200px; height: 200px;">
+            </div>
+            
+            <script>
+let currentIndex = 0;
+const images = document.querySelectorAll('.image-slider img');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(index) {
+    images.forEach((img, i) => {
+        img.classList.remove('active');
+        dots[i].classList.remove('active-dot');
+    });
+    images[index].classList.add('active');
+    dots[index].classList.add('active-dot');
+}
+
+function currentSlide(index) {
+    currentIndex = index;
+    showSlide(currentIndex);
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+        currentIndex = (currentIndex + 1) % images.length;
+        showSlide(currentIndex);
+    } else if (event.key === 'ArrowLeft') {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showSlide(currentIndex);
+    }
+});
+
+            </script>
+            </div>            
+        </div>
+    </div>
+</body>
+</html>
+
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

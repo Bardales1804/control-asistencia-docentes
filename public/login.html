@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login - CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('Img/fondo-login.jpg') no-repeat center center fixed; /* Asegúrate de tener esta imagen en la carpeta Img */
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Superposición de color para mejorar la visibilidad */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según sea necesario */
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 2; /* Asegura que el header esté por encima de la superposición */
+            background-color: rgba(51, 51, 51, 0.8); /* Fondo semitransparente */
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header img {
+            margin-right: 20px;
+            width: 100px;
+            height: auto;
+        }
+
+        header h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        /* Container Principal */
+        .main-container {
+            position: relative;
+            z-index: 2; /* Asegura que el contenido esté por encima de la superposición */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px); /* Ajusta según la altura del header */
+        }
+
+        /* Caja de Login */
+        .login-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .login-box:hover {
+            transform: scale(1.02);
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #333;
+            font-family: 'Lobster', cursive;
+        }
+
+        .login-box .user-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            border: none;
+            border-bottom: 2px solid #ff6600;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-box .user-box input:focus {
+            border-bottom: 2px solid #cc5200;
+        }
+
+        .login-box .user-box label {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #999;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #ff6600;
+            font-size: 12px;
+        }
+
+        .login-box button {
+            background-color: #ff6600;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            transition: background 0.3s;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .login-box button:hover {
+            background-color: #cc5200;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            color: red;
+        }
+
+        /* Responsividad */
+        @media (max-width: 600px) {
+            .login-box {
+                width: 90%;
+                padding: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            header img {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso</h1>
+    </header>
+    <div class="main-container">
+        <div class="login-box">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="user-box">
+                    <input type="text" id="username" required>
+                    <label>Usuario</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" id="password" required>
+                    <label>Contraseña</label>
+                </div>
+                <button type="submit">Ingresar</button>
+            </form>
+            <p id="message"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+    
+            // Definir los usuarios y contraseñas
+            const users = [
+                { username: 'Prof.Daniel25', password: 'cccpDaniel25' },
+                { username: 'Prof.Jose25', password: 'cccpJose25' },
+                { username: 'Prof.Sandra25', password: 'cccpSandra25' },
+                { username: 'Prof.Alejandra25', password: 'cccpAlejandra25' }
+            ];
+    
+            // Validar las credenciales
+            const validUser = users.find(user => user.username === username && user.password === password);
+    
+            if (validUser) {
+                window.location.href = 'inicio.html'; // Redirigir a la página principal
+            } else {
+                document.getElementById('message').innerText = 'Usuario o contraseña incorrectos.';
+            }
+        });
+    </script>
+    </body>
+</html>

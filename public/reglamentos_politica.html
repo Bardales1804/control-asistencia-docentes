@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reglamentos Educativos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/Img/fondo.jpg');
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            background-color: white;
+            color: blue;
+        }
+        #pdfViewer {
+            width: 80%;
+            height: 500px;
+            border: 2px solid blue;
+            margin: 20px auto;
+        }
+        .navigation {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #057eff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:disabled {
+            background-color: black;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: black;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: black;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" style="position: absolute; top: 10px; left: 10px; font-size: 16px; text-decoration: none; color: #ffffff; background-color: black; padding: 10px; border-radius: 5px; transition: background-color 0.3s;">Volver al inicio</a>
+
+    <h1>Reglamento y Política Educativa e Institucional</h1>
+
+    <!-- IFrame para mostrar PDFs -->
+    <iframe id="pdfViewer" src="Reglamento de Evaluación de los Aprendizajes.pdf" type="application/pdf"></iframe>
+
+    <!-- Controles de navegación -->
+    <div class="navigation">
+        <button id="prevBtn" onclick="previousPDF()" disabled>Anterior</button>
+        <button id="nextBtn" onclick="nextPDF()">Siguiente</button>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Colegio de Ciencias Comerciales El Progreso</p>
+    </div>
+    <script>
+        // Lista de PDFs
+        const pdfs = [
+            "Reglamento de Evaluación de los Aprendizajes.pdf",
+            "normativa de convivencia pacifica y disciplina para una cultura de paz en los centros educativos.pdf",
+            "Reglamento interno de disciplina para los alumnos del colegio ciencias comerciales el progreso.pdf",
+            "REGLAMENTO INTERNO DE TRABAJO.pdf"
+        ];
+
+        // Índice actual del PDF
+        let currentPDF = 0;
+
+        // Función para mostrar el PDF anterior
+        function previousPDF() {
+            if (currentPDF > 0) {
+                currentPDF--;
+                document.getElementById("pdfViewer").src = pdfs[currentPDF];
+                updateButtons();
+            }
+        }
+
+        // Función para mostrar el siguiente PDF
+        function nextPDF() {
+            if (currentPDF < pdfs.length - 1) {
+                currentPDF++;
+                document.getElementById("pdfViewer").src = pdfs[currentPDF];
+                updateButtons();
+            }
+        }
+
+        // Función para actualizar el estado de los botones
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentPDF === 0;
+            document.getElementById("nextBtn").disabled = currentPDF === pdfs.length - 1;
+        }
+    </script>
+
+</body>
+</html>

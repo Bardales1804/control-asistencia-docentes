@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio - Información y Ubicaciónx</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/Img/fondo.jpg');
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: blue;
+        }
+        p {
+            color: black;
+        }
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: black;
+            margin-top: 30px;
+        }
+    </style>
+    <!-- Estilos de Leaflet para los mapas -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <a href="index.html" style="position: absolute; top: 10px; left: 10px; font-size: 16px; text-decoration: none; color: #ffffff; background-color: black; padding: 10px; border-radius: 5px; transition: background-color 0.3s;">Volver al inicio</a>
+
+    <div class="container">
+        <h1>Infraestructura</h1>
+        <img src="colegio.jpeg" alt="Foto del Colegio">
+        <p>Nuestro colegio cuenta con más de 50 años de experiencia en la formación de jóvenes con valores, responsabilidad, y un alto nivel académico. Nos ubicamos en el corazón de la ciudad, facilitando el acceso a todos nuestros estudiantes y personal docente.</p>
+
+        <h2>Ubicación</h2>
+        <!-- Contenedor para el mapa -->
+        <div id="map"></div>
+        <div class="footer">
+            <p>&copy; 2024 Colegio de Ciencias Comerciales El Progreso</p>
+        </div>
+    </div>
+ 
+    <!-- Script para Leaflet y OpenStreetMap -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        var map = L.map('map').setView([14.85611547061137, -90.06889607568283], 15);
+
+        // Cargar y mostrar el mapa desde OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Añadir un marcador en la ubicación del colegio
+        L.marker([14.85611547061137, -90.06889607568283]).addTo(map)
+            .bindPopup('Colegio Ciencias Comerciales, El Progreso')
+            .openPopup();
+    </script>
+
+</body>
+</html>

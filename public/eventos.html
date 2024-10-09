@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="#">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a></li>
+                    <li><a href="#">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="planilla.html">Planilla</a></li>
+                </ul>
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Gestión de Eventos</title>
+                    <link rel="stylesheet" href="Css/styles.css">
+                    <style>
+                        body {
+                            background-color: white; 
+                            font-family: 'Montserrat', sans-serif;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        
+                        .table-container {
+                            display: flex;
+                            justify-content: center; 
+                            align-items: center; 
+                            margin-top: 50px;
+                        }
+                        
+                        table {
+                            background-color: white;
+                            color: black;
+                            border-collapse: collapse;
+                            width: 80%;
+                            max-width: 1200px;
+                            margin: 0 auto;
+                        }
+                        
+                        th, td {
+                            padding: 10px;
+                            text-align: left;
+                            border: 2px solid #000;
+                        }
+                        
+                        th {
+                            background-color: #ff6600;
+                            color: white;
+                        }
+                        button {
+            background-color: #ffff00; /* Color verde */
+            color: black;              /* Texto en blanco */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffff00; /* Color al pasar el ratón */
+        }
+        #evento-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        label, input {
+            margin-bottom: 10px;
+        }
+/* Estilos para el botón de eliminar */
+.delete-button {
+    background-color: #e74c3c; /* Color de fondo rojo */
+    border: none;               /* Sin bordes */
+    color: black;               /* Texto en blanco */
+    padding: 10px 20px;         /* Espaciado interno */
+    text-align: center;         /* Alineación del texto */
+    text-decoration: none;      /* Sin subrayado */
+    display: inline-block;      /* En línea */
+    font-size: 16px;            /* Tamaño de fuente */
+    cursor: pointer;            /* Cursor de puntero al pasar el ratón */
+    border-radius: 5px;         /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave al pasar el ratón */
+}
+
+.delete-button:hover {
+    background-color: #c0392b; /* Color de fondo más oscuro al pasar el ratón */
+}
+                    </style>
+                </head>
+                <body>
+                    <header>
+                        <img src="Img/logo2.jpg" alt="Logo Colegio" style="background: #000000; margin: 0 auto 0 25px; width: 100px;">
+                        <h1>Gestión de Eventos - Colegio Ciencias Comerciales</h1>
+                    </header>
+                    <main>
+                        <div class="centered">
+                            <button id="agregar-evento-btn" style="background-color: #ffff00; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block; margin-left: 0;">➕ Agregar Evento</button>
+                        </div>
+                    
+                        <!-- Formulario para registrar evento -->
+                        <form id="evento-form">
+                            <label for="Id_evento">ID Evento:</label>
+                            <input type="number" id="Id_evento" name="Id_evento" required>
+                            <br>
+                            <label for="Codigo">Código Docente:</label>
+                            <input type="number" id="Codigo" name="Codigo" required>
+                            <br>
+                            <label for="Titulo">Título:</label>
+                            <input type="text" id="Titulo" name="Titulo" required>
+                            <br>
+                            <label for="Fecha_inicio">Fecha Inicio:</label>
+                            <input type="date" id="Fecha_inicio" name="Fecha_inicio" required>
+                            <br>
+                            <label for="Fecha_fin">Fecha Fin:</label>
+                            <input type="date" id="Fecha_fin" name="Fecha_fin" required>
+                            <br>
+                            <label for="Lugar">Lugar:</label>
+                            <input type="text" id="Lugar" name="Lugar" required>
+                            <br>
+                            <label for="Observaciones">Observaciones:</label>
+                            <input type="text" id="Observaciones" name="Observaciones">
+                            <br>
+                            <label for="Descripcion">Descripción:</label>
+                            <input type="text" id="Descripcion" name="Descripcion" required>
+                            <br>
+                            <button type="submit">💾 180420022413
+                                Guardar Evento</button>
+                        </form>
+                
+                        <h2 class="centered">Eventos Registrados</h2>
+                        <!-- ... código anterior ... -->
+                <table id="eventos-table">
+                    <thead>
+                        <tr>
+                            <th>Id Evento</th>
+                            <th>Código Docente</th>
+                            <th>Título</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Lugar</th>
+                            <th>Observaciones</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los eventos se llenarán aquí con JavaScript -->
+                    </tbody>
+                </table>
+                <!-- ... código posterior ... -->
+                
+                    </main>
+                    <script src="Js/eventos.js"></script>
+                </body>
+                </html>
+                
+
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

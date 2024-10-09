@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Permisos</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+    <style>
+        /* Estilos similares a los de docentes.html para consistencia */
+        body {
+            background-color: white; 
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul {
+    list-style-type: none;
+    margin: 2px;
+    padding: 10px;
+    background-color: #ff6600;
+    border-radius: 10px;
+    display: inline-block;
+    width: 99%;
+    margin-left: 0px; /* Adjust margin-left to move it to the right */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 22px;
+}
+        
+        .main-container {
+            display: flex;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .form-container {
+            display: none; /* Ocultamos el formulario inicialmente */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #ffff00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border: 2px solid #ffff00;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffff00;
+        }
+        .muro {
+            background-color: white; /* Color de fondo del muro */
+            border: 2px solid #ff6600; /* Borde del muro */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra para efecto 3D */
+            margin: 20px auto; /* Centrar el muro en la página */
+            max-width: 1200px; /* Ancho máximo */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        table {
+            background-color: white;
+            color: black; 
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;  
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 2px solid #000;
+        }
+
+        th {
+            background-color: #ff6600;
+            color: white; 
+        }
+        .centered {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            margin: 0 5px;
+        }
+        .update-button {
+            background-color: #ffff00; /* Verde */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-button:hover {
+            background-color: #ffff00; /* Verde más oscuro al pasar el mouse */
+        }
+
+        .delete-button {
+            background-color: red; /* Rojo */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f; /* Rojo más oscuro al pasar el mouse */
+        }
+
+        /* Estilos adicionales para el formulario de Permisos */
+        .permiso-form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .permiso-actions {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+                <li>📝 <a href="permisos.html">Permisos</a></li> <!-- Añadir enlace a Permisos -->
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="planilla.html">Planilla</a></li>
+                </ul>
+            </nav>
+
+            <header>
+                <img src="Img/logo2.jpg" alt="Logo Colegio" style="background: #000000; margin: 0 auto 0 25px; width: 100px;">
+                <h1>Gestión de Permisos - Colegio Ciencias Comerciales</h1>
+            </header>
+            <div class="muro">
+                <div class="search-container centered">
+                    <label for="codigo-docente" style="color: black;">🔍 Buscar docente por código:</label>
+                    <input type="text" id="searchCodigo" placeholder="Buscar por código de docente" required>
+                    <button id="searchPermisoBtn" class="update-button" style="background-color: #ffff00; color: black;">🔍 Buscar</button>
+                </div>
+                
+                <!-- Información del Docente Encontrado -->
+                <div id="docenteInfo" style="display: none; margin-top: 20px;">
+                    <h2 style="text-align: center;      /* Centra el texto */color: blue; /* Cambia el color a azul (puedes modificar este valor) */font-size: 24px;         /* Tamaño del texto */font-weight: bold;  /* Pone el texto en negritas */margin-bottom: 20px;     /* Añade un espacio debajo del título */">Información del Docente</h2>
+                    <p><strong>Código:</strong> <span id="docenteCodigo"></span></p>
+                    <p><strong>Nombres:</strong> <span id="docenteNombres"></span></p>
+                    <p><strong>Apellidos:</strong> <span id="docenteApellidos"></span></p>
+                </div>
+
+                <!-- Formulario para Agregar/Actualizar Permisos -->
+                <div class="form-container" id="permisosFormContainer">
+                    <h2 id="formTitle">Agregar Permiso</h2>
+                    <form id="permisosForm">
+                        <input type="hidden" id="permisoId" value="">
+                        <input type="hidden" id="permisoCodigo" value="">
+                        
+                        <div class="permiso-form-group">
+                            <label for="fecha_permiso">Fecha del Permiso:</label>
+                            <input type="date" id="fecha_permiso" name="fecha_permiso" required>
+                        </div>
+                        <div class="permiso-form-group">
+                            <label for="motivo">Motivo:</label>
+                            <input type="text" id="motivo" name="motivo" required>
+                        </div>
+                        <div class="permiso-form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+                        </div>
+                        <div class="permiso-actions">
+                            <button type="submit" id="savePermisoBtn">Guardar Permiso</button>
+                            <button type="button" id="cancelPermisoBtn" style="background-color: #ffff00;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabla para Mostrar Permisos del Docente -->
+                <div class="table-container" id="permisosTableContainer" style="display: none;">
+                    <h2 style="text-align: center;      /* Centra el texto */color: blue; /* Cambia el color a azul (puedes modificar este valor) */font-size: 24px;         /* Tamaño del texto */font-weight: bold;  /* Pone el texto en negritas */margin-bottom: 20px;     /* Añade un espacio debajo del título */">Permisos del Docente</h2>
+                                    <button id="addPermisoBtn" class="update-button" style="background-color: #ffff00; color: black; margin-bottom: 10px;">➕ Agregar Permiso</button>
+                    <table id="permisosTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>ID Permiso</th>
+                                <th>Fecha Permiso</th>
+                                <th>Motivo</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/permisos.js"></script>
+    <script>
+        document.getElementById('cancelPermisoBtn').onclick = function() {
+            document.getElementById('permisosFormContainer').style.display = 'none';
+            document.getElementById('permisosForm').reset();
+            document.getElementById('permisoId').value = '';
+            document.getElementById('formTitle').innerText = 'Agregar Permiso';
+        };
+    </script>
+</body>
+</html>

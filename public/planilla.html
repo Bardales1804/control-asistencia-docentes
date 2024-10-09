@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a ></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="/planilla.html">Planilla</a></li>
+                </ul>
+                <!DOCTYPE html> 
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Sistema CCCP - Planilla</title>
+                    <link rel="stylesheet" href="Css/styles.css">
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+                    <style>
+                        body {
+                            font-family: 'Montserrat', sans-serif;
+                            background-color: #f0f0f0;
+                            color: black;
+                            margin: 0;
+                            padding: 0;
+                        }
+                
+                        header {
+                            background-color: #ff6600;
+                            color: white;
+                            text-align: center;
+                            padding: 20px;
+                        }
+                
+                        h1 {
+                            text-align: center;
+                            color:blue;
+                        }
+                
+                        .container {
+                            width: 80%;
+                            margin: 20px auto;
+                            background-color: #fff;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        }
+                
+                        form {
+                            margin-bottom: 20px;
+                        }
+                
+                        label {
+                            display: block;
+                            margin-top: 10px;
+                            font-weight: bold;
+                        }
+                
+                        input[type="text"], input[type="date"], textarea {
+                            width: 100%;
+                            padding: 10px;
+                            margin-top: 5px;
+                            margin-bottom: 20px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                        }
+                
+                        button {
+                            background-color: #ffff00;
+                            color: black;
+                            padding: 10px 15px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        }
+                
+                        button:hover {
+                            background-color: #ffff00;
+                        }
+                
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                
+                        table, th, td {
+                            border: 1px solid #ddd;
+                        }
+                
+                        th, td {
+                            padding: 12px;
+                            text-align: center;
+                            border: 2px solid #000;
+                        }
+                
+                        th {
+                            background-color: #ff6600;
+                            color: white;
+                        }
+                
+                        .message {
+                            margin: 10px 0;
+                            color: green;
+                        }
+                
+                        .delete-button {
+                            background-color: red;
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            padding: 5px 10px;
+                            cursor: pointer;
+                        }
+                
+                        .delete-button:hover {
+                            background-color: #d32f2f;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <header>
+                        <img src="Img/logo2.jpg" alt="Logo Colegio" style="background: #000000; margin: 0 auto 0 25px; width: 100px;">
+                        <h1>Gestión de Planillas - Colegio Ciencias Comerciales</h1>
+                    </header>
+                    <div class="container">
+                        <form id="buscar-docente-form">
+                            <label for="codigo-docente">🔍 Buscar docente por código:</label>
+                            <input type="text" id="codigo-docente" name="codigo-docente" placeholder="Ingrese el código del docente" required>
+                            <button type="button" onclick="buscarDocente()">🔍 Buscar</button>
+                        </form>
+                
+                        <div id="docente-info" style="display:none;">
+                            <h1>Docente encontrado</h1>
+                            <p><strong>Código:</strong> <span id="codigo-docente-info"></span></p>
+                            <p><strong>Nombre:</strong> <span id="nombre-docente"></span></p>
+                            <p><strong>Apellido:</strong> <span id="apellido-docente"></span></p>
+                
+                            <h1>Registrar Planilla</h1>
+                            <form id="registrar-planilla-form">
+                                <label for="mes">Mes:</label>
+                                <input type="text" id="mes" name="mes" placeholder="Ej. Septiembre" required>
+                
+                                <label for="firma_planilla">¿Ya firmó Planilla? Si/No:</label>
+                                <input type="text" id="firma_planilla" name="firma_planilla" placeholder="Ej. Firma" required>
+                
+                                <label for="observaciones">Observaciones:</label>
+                                <textarea id="observaciones" name="observaciones" placeholder="Observaciones (opcional)"></textarea>
+                
+                                <button type="button" onclick="registrarPlanilla()">➕ Registrar Planilla</button>
+                                <div id="mensaje" class="message"></div>
+                            </form>
+                        </div>
+                
+                        <h1>Planillas Registradas</h1>
+                        <table id="planilla-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Código</th>
+                                    <th>Mes</th>
+                                    <th>Firmó Planilla</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="planilla-body">
+                                <!-- Planillas registradas aparecerán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                
+                    <script>
+                        async function buscarDocente() {
+                            const codigo = document.getElementById('codigo-docente').value.trim();
+                            if (!codigo) {
+                                alert('Por favor, ingresa un código.');
+                                return;
+                            }
+                
+                            try {
+                                const response = await fetch(`/api/docentes/${codigo}`);
+                                if (!response.ok) {
+                                    throw new Error('Docente no encontrado.');
+                                }
+                                const docente = await response.json();
+                                mostrarDocente(docente);
+                                obtenerPlanillas(codigo);
+                            } catch (error) {
+                                alert(error.message);
+                                limpiarDocente();
+                            }
+                        }
+                
+                        function mostrarDocente(docente) {
+                            document.getElementById('codigo-docente-info').innerText = docente.Codigo;
+                            document.getElementById('nombre-docente').innerText = docente.Nombres;
+                            document.getElementById('apellido-docente').innerText = docente.Apellidos;
+                            document.getElementById('docente-info').style.display = 'block';
+                        }
+                
+                        function limpiarDocente() {
+                            document.getElementById('codigo-docente-info').innerText = '';
+                            document.getElementById('nombre-docente').innerText = '';
+                            document.getElementById('apellido-docente').innerText = '';
+                            document.getElementById('docente-info').style.display = 'none';
+                            document.getElementById('planilla-body').innerHTML = '';
+                        }
+                
+                        async function registrarPlanilla() {
+                            const codigo = document.getElementById('codigo-docente-info').innerText;
+                            const mes = document.getElementById('mes').value.trim();
+                            const firma_planilla = document.getElementById('firma_planilla').value.trim();
+                            const observaciones = document.getElementById('observaciones').value.trim();
+                
+                            if (!mes || !firma_planilla) {
+                                alert('Por favor, completa todos los campos requeridos.');
+                                return;
+                            }
+                
+                            const data = { Codigo: parseInt(codigo), Mes: mes, Firma_planilla: firma_planilla, Observaciones: observaciones };
+                
+                            try {
+                                const response = await fetch('/api/planilla', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(data)
+                                });
+                
+                                const mensajeDiv = document.getElementById('mensaje');
+                                if (response.ok) {
+                                    mensajeDiv.innerText = 'Planilla registrada con éxito.';
+                                    document.getElementById('registrar-planilla-form').reset();
+                                    obtenerPlanillas(codigo);
+                                } else {
+                                    const errorData = await response.json();
+                                    mensajeDiv.innerText = `Error al registrar la planilla: ${errorData.message || 'Desconocido'}`;
+                                    mensajeDiv.style.color = 'red';
+                                }
+                            } catch (error) {
+                                console.error('Error al registrar la planilla:', error);
+                                document.getElementById('mensaje').innerText = 'Error al registrar la planilla.';
+                                document.getElementById('mensaje').style.color = 'red';
+                            }
+                        }
+                
+                        async function obtenerPlanillas(codigo) {
+                            try {
+                                const response = await fetch(`/api/planilla/codigo/${codigo}`);
+                                if (!response.ok) {
+                                    throw new Error('Error al obtener las planillas.');
+                                }
+                                const planillas = await response.json();
+                                mostrarPlanillas(planillas);
+                            } catch (error) {
+                                alert(error.message);
+                            }
+                        }
+                
+                        function mostrarPlanillas(planillas) {
+                            const planillaBody = document.getElementById('planilla-body');
+                            planillaBody.innerHTML = ''; // Limpiar la tabla
+                
+                            if (planillas.length > 0) {
+                                planillas.forEach(planilla => {
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
+                                        <td>${planilla.Id}</td>
+                                        <td>${planilla.Codigo}</td>
+                                        <td>${planilla.Mes}</td>
+                                        <td>${planilla.Firma_planilla}</td>
+                                        <td>${planilla.Observaciones || '-'}</td>
+                                        <td><button class="delete-button" onclick="eliminarPlanilla(${planilla.Id})">🗑️ Eliminar</button></td>
+                                    `;
+                                    planillaBody.appendChild(row);
+                                });
+                            } else {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `<td colspan="6">No hay planillas registradas para este docente.</td>`;
+                                planillaBody.appendChild(row);
+                            }
+                        }
+                
+                        async function eliminarPlanilla(id) {
+                            if (!confirm('¿Estás seguro de que deseas eliminar esta planilla?')) {
+                                return;
+                            }
+                
+                            try {
+                                const response = await fetch(`/api/planilla/${id}`, { method: 'DELETE' });
+                                if (response.ok) {
+                                    alert('Planilla eliminada con éxito.');
+                                    const codigo = document.getElementById('codigo-docente-info').innerText;
+                                    obtenerPlanillas(codigo);
+                                } else {
+                                    const errorData = await response.json();
+                                    alert(`Error al eliminar la planilla: ${errorData.message || 'Desconocido'}`);
+                                }
+                            } catch (error) {
+                                console.error('Error al eliminar la planilla:', error);
+                                alert('Error al eliminar la planilla.');
+                            }
+                        }
+                
+                        // Cargar planillas al cargar la página si ya se ha buscado un docente previamente
+                        window.onload = () => {
+                            const codigo = sessionStorage.getItem('codigo-docente');
+                            if (codigo) {
+                                document.getElementById('codigo-docente').value = codigo;
+                                buscarDocente();
+                            }
+                        };
+                    </script>
+                </body>
+                </html>                
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

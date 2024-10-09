@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="planilla.html">Planilla</a></li>
+                </ul>
+                <style>
+                /* Estilos originales */
+                body {
+                    background-color: #f0f0f0;
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                .container {
+                    width: 80%; /* Ancho ajustado para que coincida con tu diseño */
+                    margin: 20px auto; /* Centrado con margen superior */
+                    padding: 20px;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                
+                h1 {
+                    text-align: center;
+                    color: blue;
+                    font-family: 'Montserrat', sans-serif;
+                }
+                
+                
+                .date-navigation {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                }
+                
+                .date-navigation button {
+                    padding: 10px 20px;
+                    background-color: #ffff00;
+                    color: black;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    font-size: 1rem;
+                    transition: background-color 0.3s ease;
+                }
+                
+                .date-navigation button:hover {
+                    background-color: #ffff00;
+                }
+                
+                .date-display {
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+                
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 12px;
+                    text-align: center;
+                }
+                
+                th {
+                    background-color: #ff6600;
+                    color: black;
+                    font-size: 1rem;
+                }
+                
+                td {
+                    font-size: 0.95rem;
+                }
+                
+                /* Estilo del campo de entrada de código (scanner) */
+                .input-container {
+                    text-align: center;
+                    margin-top: 20px; /* Separación entre la tabla y el input */
+                }
+                
+                #scannerInput {
+                    display: inline-block;
+                    padding: 10px;
+                    width: 300px; /* Ajustar el ancho del campo */
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                    font-size: 16px;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                    outline: none;
+                }
+                
+                /* Responsividad para pantallas pequeñas */
+                @media (max-width: 768px) {
+                    .container {
+                        width: 95%;
+                        padding: 15px;
+                    }
+                
+                    .date-navigation {
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                
+                    table, th, td {
+                        font-size: 0.85rem;
+                        padding: 8px;
+                    }
+                
+                    #scannerInput {
+                        width: 100%; /* Ocupa todo el ancho disponible en pantallas pequeñas */
+                    }
+                }
+            </style>
+
+                <div class="container">
+                    <h1>Registro de Asistencias</h1>
+                
+                    <!-- Navegación de fechas -->
+                    <div class="date-navigation">
+                        <button id="prevDateBtn">Anterior</button>
+                        <div class="date-display" id="currentDateDisplay"></div>
+                        <button id="nextDateBtn">Siguiente</button>
+                    </div>
+                
+                    <!-- Tabla para mostrar las asistencias registradas -->
+                    <table id="asistenciasTable">
+                        <thead>
+                            <tr>
+                                <th>ID Asistencia</th>
+                                <th>Código</th>
+                                <th>Fecha</th>
+                                <th>Hora de Entrada</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se llenarán las filas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="input-container">
+                    <input type="text" id="scannerInput" autocomplete="off" autofocus>
+                </div>
+                
+                <script>
+                    // Variables globales
+                    let currentDate = new Date();
+
+                    // Función para formatear la fecha en YYYY-MM-DD
+                    function formatDate(date) {
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        return `${year}-${month}-${day}`;
+                    }
+
+                    // Función para actualizar la visualización de la fecha
+                    function updateDateDisplay() {
+                        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                        const formattedDate = currentDate.toLocaleDateString('es-ES', options);
+                        document.getElementById('currentDateDisplay').textContent = formattedDate;
+                    }
+
+                    // Función para cargar las asistencias de la fecha actual
+                    async function cargarAsistencias() {
+                        const fecha = formatDate(currentDate);
+                        try {
+                            let url = `http://localhost:4000/api/asistencias?fecha=${encodeURIComponent(fecha)}`;
+                            const response = await fetch(url);
+                            const asistencias = await response.json();
+
+                            const tableBody = document.getElementById("asistenciasTable").getElementsByTagName('tbody')[0];
+                            tableBody.innerHTML = ''; // Limpiar la tabla antes de llenarla
+
+                            asistencias.forEach(asistencia => {
+                                const fila = document.createElement('tr');
+
+                                fila.innerHTML = `
+                                    <td>${asistencia.ID_Asistencia}</td>
+                                    <td>${asistencia.Codigo}</td>
+                                    <td>${asistencia.Fecha}</td>
+                                    <td>${asistencia.Hora_de_entrada || '-'}</td>
+                                    <td>${asistencia.Observaciones || '-'}</td>
+                                `;
+
+                                tableBody.appendChild(fila);
+                            });
+
+                        } catch (error) {
+                            console.error('Error al cargar las asistencias:', error);
+                        }
+                    }
+
+                    // Función para manejar el botón "Anterior"
+                    function prevDate() {
+                        currentDate.setDate(currentDate.getDate() - 1);
+                        updateDateDisplay();
+                        cargarAsistencias();
+                    }
+
+                    // Función para manejar el botón "Siguiente"
+                    function nextDate() {
+                        currentDate.setDate(currentDate.getDate() + 1);
+                        updateDateDisplay();
+                        cargarAsistencias();
+                    }
+
+                    // Función para procesar el escaneo sin alertas
+                    async function procesarEscaneo(codigoEscaneado) {
+                        if (codigoEscaneado.trim() === "") return;
+
+                        const now = new Date();
+                        const fechaEscaneo = formatDate(now);
+
+                        const hour = String(now.getHours()).padStart(2, '0');
+                        const minutes = String(now.getMinutes()).padStart(2, '0');
+                        const seconds = String(now.getSeconds()).padStart(2, '0');
+                        const horaEscaneo = `${hour}:${minutes}:${seconds}`;
+
+                        // Enviar la asistencia al backend
+                        try {
+                            const response = await fetch('http://localhost:4000/asistencias', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    Codigo: parseInt(codigoEscaneado),
+                                    Fecha: fechaEscaneo,
+                                    Hora_de_entrada: horaEscaneo,
+                                    Observaciones: ''
+                                })
+                            });
+
+                            const result = await response.json();
+
+                            if (response.ok) {
+                                // Si la asistencia es para la fecha actual mostrada, agregarla a la tabla
+                                if (fechaEscaneo === formatDate(currentDate)) {
+                                    agregarAsistenciaAlFrontend(result.asistencia);
+                                }
+                            } else {
+                                console.error(`Error al registrar asistencia: ${result.message}`);
+                            }
+                        } catch (error) {
+                            console.error('Error al comunicarse con la API de asistencias:', error);
+                        }
+                    }
+
+                    // Función para agregar la asistencia al frontend
+                    function agregarAsistenciaAlFrontend(asistencia) {
+                        const tableBody = document.getElementById("asistenciasTable").getElementsByTagName('tbody')[0];
+                        const fila = document.createElement('tr');
+
+                        fila.innerHTML = `
+                            <td>${asistencia.ID_Asistencia}</td>
+                            <td>${asistencia.Codigo}</td>
+                            <td>${asistencia.Fecha}</td>
+                            <td>${asistencia.Hora_de_entrada || '-'}</td>
+                            <td>${asistencia.Observaciones || '-'}</td>
+                        `;
+
+                        tableBody.appendChild(fila);
+                    }
+
+                    // Variables para capturar la entrada del escáner
+                    let scanBuffer = "";
+                    let scanTimeout;
+
+                    // Tiempo máximo entre caracteres para considerar una entrada como escaneo (ms)
+                    const SCAN_DELAY = 100;
+
+                    // Evento para capturar las entradas del escáner
+                    document.getElementById("scannerInput").addEventListener("keydown", function(event) {
+                        if (event.key === "Enter") {
+                            procesarEscaneo(scanBuffer);
+                            scanBuffer = "";
+                            clearTimeout(scanTimeout);
+                        } else {
+                            scanBuffer += event.key;
+                            clearTimeout(scanTimeout);
+                            scanTimeout = setTimeout(() => {
+                                scanBuffer = "";
+                            }, SCAN_DELAY);
+                        }
+                    });
+
+                    // Asegurarse de que el campo de escaneo esté siempre enfocado
+                    window.onload = function() {
+                        const scannerInput = document.getElementById("scannerInput");
+                        scannerInput.focus();
+
+                        document.addEventListener("click", function() {
+                            scannerInput.focus();
+                        });
+
+                        // Escuchar eventos de visibilidad para mantener el foco
+                        document.addEventListener("visibilitychange", function() {
+                            if (!document.hidden) {
+                                scannerInput.focus();
+                            }
+                        });
+
+                        // Actualizar la visualización de la fecha y cargar asistencias
+                        updateDateDisplay();
+                        cargarAsistencias();
+
+                        // Asignar eventos a los botones de navegación
+                        document.getElementById('prevDateBtn').addEventListener('click', prevDate);
+                        document.getElementById('nextDateBtn').addEventListener('click', nextDate);
+                    };
+                </script>
+
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

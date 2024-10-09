@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maestros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/Img/fondo.jpg');
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            background-color: white;
+            color: blue;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+            gap: 20px; /* Espacio entre fotos */
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .grid-item {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .grid-item h3 {
+            margin-top: 10px;
+            color: black;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: black;
+            margin-top: 30px;
+        }
+
+        /* Estilos responsive para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: 1fr; /* 1 columna */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Docentes, Encargados y Administradores del Colegio</h1>
+    <a href="index.html" style="position: absolute; top: 10px; left: 10px; font-size: 16px; text-decoration: none; color: #ffffff; background-color: black; padding: 10px; border-radius: 5px; transition: background-color 0.3s;">Volver al inicio</a>
+    <div class="grid-container" id="maestrosGrid">
+        <!-- Las tarjetas de maestros se agregarán aquí dinámicamente -->
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Colegio de Ciencias Comerciales El Progreso</p>
+    </div>
+    <script>
+        // Datos de ejemplo para los maestros (esto puede venir de tu API o base de datos)
+        const maestros = [
+            { nombre: 'Silvia Alejandra Rivas Escobar', foto: 'Alejandra.png' },
+            { nombre: 'Sandra Lorena Flores Roldán de Mejía', foto: 'Sandra.jpg' },
+            { nombre: 'Zoila Margarita Monzón Morales de Portillo', foto: 'Margarita.png' },
+            { nombre: 'Cesia Corina Monterroso Beltetón', foto: 'Cesia.png' },
+            { nombre: 'Aura Estela Pérez Alonzo', foto: 'Aura.png' },
+            { nombre: 'Melissa Anahí Macal Aldana', foto: 'Melissa.png' },
+            { nombre: 'María Belén Amado López', foto: 'Belen.png' },
+            { nombre: 'Sandy Maribel Mayén Contreras', foto: 'Sandy.png' },
+            { nombre: 'Dayri Luseth López Crúz', foto: 'Dayri.png' },
+            { nombre: 'Samuel Mejía Gómez', foto: 'Samuel.png' },
+            { nombre: 'Elvis Sting Batz Pérez', foto: 'Elvis.png' },
+            { nombre: 'Luis Pedro García Grajeda', foto: 'Pedro.png' },
+            { nombre: 'Juan Manuel Sosa Cruz', foto: 'Manuel.png' },
+            { nombre: 'Bryan Rocael Bardales Castillo', foto: 'Bryan.png' },
+            { nombre: 'Oscar Eugenio Aroche Hernández', foto: 'Oscar.png' },
+            { nombre: 'Edgar Eduardo De León Ajin', foto: 'Edgar.png' }
+        ];
+
+        // Función para generar el HTML de las tarjetas de los maestros
+        function loadMaestros() {
+            const maestrosGrid = document.getElementById('maestrosGrid');
+            maestros.forEach(maestro => {
+                const item = document.createElement('div');
+                item.classList.add('grid-item');
+                item.innerHTML = `
+                    <img src="${maestro.foto}" alt="${maestro.nombre}">
+                    <h3>${maestro.nombre}</h3>
+                `;
+                maestrosGrid.appendChild(item);
+            });
+        }
+
+        // Cargar los maestros cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', loadMaestros);
+    </script>
+</body>
+</html>

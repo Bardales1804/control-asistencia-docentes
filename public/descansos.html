@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema CCCP</title>
+    <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <header>
+        <img style="background: #000000 !important; margin: 0 auto 0 25px; width: 100px; height: auto;" class="left_col" src="Img/logo2.jpg" alt="Logo Colegio">
+        <h1>Colegio Ciencias Comerciales, El Progreso.</h1>
+        <a href="login.html" style="
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        color: black; 
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    " 
+    onmouseover="this.style.backgroundColor='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.15)';"
+    onmouseout="this.style.backgroundColor='white'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+    onmousedown="this.style.backgroundColor='white';"
+    onmouseup="this.style.backgroundColor='white';"
+    >
+        <span style="
+            margin-right: 8px;
+            font-size: 18px;
+        ">⬅️🚪</span>Cerrar Sesión
+    </a>    
+    </header>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="seccion-izquierda">
+                <img style="background: #fff !important; margin: 0 auto 0 50px; width: 180px; height: auto;" class="left_col" src="Img/logo.png" alt="Logo Colegio">
+                <h2 class="about-title">Acerca del Colegio</h2>
+            </div>
+            <ul class="seccion-especial">
+                <li>📚 <a href="historia.html">Historia del Colegio</a></li>
+                <li>🎯 <a href="mision_vision.html">Misión y Visión</a></li>
+                <li>👨‍🏫 <a href="personal_docente.html">Personal Docente</a></li>
+                <li>🏢 <a href="infraestructura.html">Infraestructura</a></li>
+                <li>📜 <a href="reglamentos_politica.html">Reglamentos y Políticas</a></li>
+                <li>💻 <a href="plataformas_recursos.html">Plataformas y Recursos</a></li>
+                <li>🎓 <a href="perfil_docente.html">Perfil del Docente</a></li>
+                <li>📞 <a href="contactanos.html">Contáctanos</a></li>
+            </ul>
+        </aside>
+        <div class="content">
+            <nav>
+                <ul>
+                    <li><a href="/inicio.html">Inicio</a></li>
+                    <li><a href="/docentes.html">Docentes</a></li>
+                    <li><a href="/horarios.html">Horarios</a></li>
+                    <li><a href="/descansos.html">Descansos</a ></li>
+                    <li><a href="/asistencias.html">Asistencias</a></li>
+                    <li><a href="/carnets.html">Carnets</a></li>
+                    <li><a href="/eventos.html">Eventos</a></li>
+                    <li><a href="/permisos.html">Permisos</a></li>
+                    <li><a href="/planilla.html">Planilla</a></li>
+                </ul>
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Calendario de Descansos</title>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
+                    <style>
+/* Estilos para los botones */
+button {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+nav ul {
+    list-style-type: none;
+    margin: 2px;
+    padding: 10px;
+    background-color: #ff6600;
+    border-radius: 10px;
+    display: inline-block;
+    width: 99%;
+    margin-left: 0px; /* Adjust margin-left to move it to the right */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+button:hover {
+    background-color: #ff6600;
+}
+
+/* Estilo para el formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+form input, form select, form textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+}
+
+form textarea {
+    height: 100px;
+    resize: none;
+}
+
+/* Estilo para la sección de descripción */
+.descripcion {
+    margin-top: 20px;
+    font-size: 18px;
+    color: black;
+    text-align: center;
+}
+
+/* Estilo para el contenedor del calendario */
+#calendario {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border: 2px solid #000;
+}
+
+/* Estilo para los eventos del calendario */
+.fc-event {
+    background-color: #ffbb7c !important;
+    border: none !important;
+    color: white !important;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* Estilo para el encabezado del calendario */
+.fc-toolbar-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ff6600;
+}
+
+.fc-button {
+    background-color: #ff6600 !important;
+    border: none !important;
+    color: white !important;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.fc-button:hover {
+    background-color: #ff6600 !important;
+}
+
+/* Estilo para los días del calendario */
+.fc-daygrid-day {
+    font-size: 16px;
+    text-align: center;
+    color: black;
+}
+
+.fc-day-today {
+    background-color: #f0f8ff !important; /* Color para el día de hoy */
+    font-weight: bold;
+}
+
+
+                        #calendario { max-width: 900px; margin: 0 auto; }
+                        .descripcion { margin-top: 20px; }
+                    </style>
+                </head>
+                <header>
+                    <img src="Img/logo2.jpg" alt="Logo Colegio" style="background: #000000; margin: 0 auto 0 25px; width: 100px;">
+                    <h1>Gestión de Descansos - Colegio Ciencias Comerciales</h1>
+                </header>
+                <body>
+                    <!-- Botón para mostrar el formulario -->
+                    <div style="text-align: left;">
+                        <button id="mostrar-formulario" style="padding: 10px 20px; background-color: #ffff00; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                            ➕ Agregar descanso
+                        </button>
+                    </div>
+
+<!-- Formulario oculto inicialmente -->
+<div id="formulario-container" style="display: none; margin-top: 20px;">
+    <h1 style="text-align: center; font-size: 28px; color: blue;"> Agregar descanso</h1>
+    <form id="form-agregar">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required>
+        
+        <label for="tipo_descanso">Tipo de Descanso:</label>
+        <select id="tipo_descanso">
+            <option value="Vacaciones">Vacaciones</option>
+            <option value="Asueto">Asueto</option>
+            <option value="Feriado">Feriado</option>
+        </select>
+        
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" required></textarea>
+        
+        <button type="submit" style="padding: 10px 20px; background-color: #ffff00; color: black; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+            💾 Guardar Descanso
+        </button>
+    </form>
+</div>
+                    <h1 style="text-align: center; font-size: 28px; color: blue;">Calendario de Descansos</h1>
+                    <div id="calendario"></div>
+
+                    <div class="descripcion" id="descripcion-display" style="background-color: #ff6600; padding: 15px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); font-size: 16px; color: #333;">
+
+                                    
+                    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/es.js"></script>
+                
+                    <script>
+                         document.getElementById('mostrar-formulario').addEventListener('click', function() {
+        const formulario = document.getElementById('formulario-container');
+        formulario.style.display = formulario.style.display === 'none' ? 'block' : 'none';
+    });
+
+                        document.addEventListener('DOMContentLoaded', async () => {
+                            const calendarioEl = document.getElementById('calendario');
+                            const calendar = new FullCalendar.Calendar(calendarioEl, {
+                                locale: 'es',
+                                initialView: 'dayGridMonth',
+                                events: async () => {
+                                    const response = await fetch('/api/descansos');
+                                    return await response.json();
+                                },
+                                eventClick: function(info) {
+                                    document.getElementById('descripcion-display').innerHTML = `
+                                        <strong>${info.event.title}</strong><br>
+                                        ${info.event.extendedProps.description}
+                                    `;
+                                }
+                            });
+                            calendar.render();
+                
+                            // Manejar el formulario de agregar descanso
+                            document.getElementById('form-agregar').addEventListener('submit', async (e) => {
+                                e.preventDefault();
+                                const fecha = document.getElementById('fecha').value;
+                                const tipo_descanso = document.getElementById('tipo_descanso').value;
+                                const descripcion = document.getElementById('descripcion').value;
+                
+                                // Enviar los datos al servidor
+                                const response = await fetch('/api/descansos', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ fecha, tipo_descanso, descripcion })
+                                });
+                
+                                if (response.ok) {
+                                    calendar.refetchEvents(); // Refrescar eventos
+                                    alert('Descanso agregado correctamente');
+                                } else {
+                                    alert('Error al agregar el descanso');
+                                }
+                                // Reiniciar el formulario
+                                e.target.reset();
+                            });
+                        });
+                    </script>
+                </body>
+                </html>                
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
