@@ -20,11 +20,11 @@ const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost', // Usa las variables de entorno si están definidas
+    host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', 
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'bardales1804',
-    database: process.env.DB_NAME || 'CCCP',
-    port: process.env.DB_PORT || 3306
+    password: process.env.DB_PASSWORD || 'PEbxzvrSiUpQsTDzsPNvOchfNYzpWlIk',
+    database: process.env.DB_NAME || 'railway',
+    port: process.env.DB_PORT || 12011
 });
 
 // Función para ejecutar consultas a la base de datos
