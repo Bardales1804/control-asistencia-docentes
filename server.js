@@ -56,6 +56,7 @@ module.exports = pool;
 // =====================
 // Rutas de la API Docentes
 // =====================
+// Obtener todos los docentes
 app.get('/api/docentes', async (req, res) => {
     try {
         const docentes = await query('SELECT * FROM Docentes');
@@ -65,6 +66,7 @@ app.get('/api/docentes', async (req, res) => {
     }
 });
 
+// Obtener un docente por su código
 app.get('/api/docentes/:codigo', async (req, res) => {
     try {
         const { codigo } = req.params;
@@ -79,6 +81,7 @@ app.get('/api/docentes/:codigo', async (req, res) => {
     }
 });
 
+// Crear o actualizar un docente
 app.post('/api/docentes', async (req, res) => {
     try {
         const { Codigo, Nombres, Apellidos, Fecha_nacimiento, Telefono, Correo_electronico, Fecha_ingreso } = req.body;
@@ -92,6 +95,7 @@ app.post('/api/docentes', async (req, res) => {
     }
 });
 
+// Actualizar un docente por su código
 app.put('/api/docentes/:codigo', async (req, res) => {
     const { codigo } = req.params;
     const { Nombres, Apellidos, Fecha_nacimiento, Telefono, Correo_electronico, Fecha_ingreso } = req.body;
@@ -106,6 +110,7 @@ app.put('/api/docentes/:codigo', async (req, res) => {
     }
 });
 
+// Eliminar un docente por su código
 app.delete('/api/docentes/:codigo', async (req, res) => {
     try {
         const { codigo } = req.params;
@@ -115,6 +120,7 @@ app.delete('/api/docentes/:codigo', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
 
 // =====================
 // Rutas de la API Horarios
