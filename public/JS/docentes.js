@@ -2,12 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('docentesForm');
     const docentesTable = document.getElementById('docentesTable').getElementsByTagName('tbody')[0];
 
-    
-    
-
     // Función para cargar los datos de los docentes desde la API
     function loadDocentes() {
-        fetch('/api/docentes')
+        fetch('https://control-asistencia-docentes.onrender.com/api/docentes')
             .then(response => response.json())
             .then(data => {
                 docentesTable.innerHTML = '';
@@ -30,16 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-
-    
     // Función para manejar el envío del formulario
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-    
+
         const formData = new FormData(form);
         const mode = document.getElementById('formMode').value;
         const codigo = document.getElementById('formCodigo').value;
-    
+
         const data = {
             Codigo: formData.get('codigo'),
             Nombres: formData.get('nombres'),
@@ -49,11 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
             Telefono: formData.get('telefono'),
             Fecha_ingreso: formData.get('fecha_ingreso'),
         };
-    
-        console.log('Datos enviados:', data); // Verifica los datos
-    
+
         if (mode === 'add') {
-            fetch('/api/docentes', {
+            fetch('https://control-asistencia-docentes.onrender.com/api/docentes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,14 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('formCodigo').value = '';
             });
         } else {
-            fetch(`/api/docentes/${codigo}`, {
+            fetch(`https://control-asistencia-docentes.onrender.com/api/docentes/${codigo}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             }).then(response => {
-                console.log('Respuesta del servidor:', response); // Verifica la respuesta del servidor
                 if (!response.ok) {
                     throw new Error('Error al actualizar docente');
                 }
@@ -88,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
 
     document.getElementById('searchDocenteBtn').addEventListener('click', function() {
         const codigoBuscado = document.getElementById('searchCodigo').value.trim();
@@ -122,38 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Función para mostrar los datos del docente en la tabla
-    function mostrarDocente(docente) {
-        const tbody = document.getElementById('docentesTable').querySelector('tbody');
-        tbody.innerHTML = ''; // Limpia la tabla
-        const row = `
-            <tr>
-                <td>${docente.Codigo}</td>
-                <td>${docente.Nombres}</td>
-                <td>${docente.Apellidos}</td>
-                <td>${docente.Fecha_nacimiento}</td>
-                <td>${docente.Telefono}</td>
-                <td>${docente.Correo_electronico}</td>
-                <td>${docente.Fecha_ingreso}</td>
-            </tr>
-        `;
-        tbody.innerHTML = row; // Añade la fila del docente encontrado
-    }
-    
-    document.getElementById('toggleButton').addEventListener('click', function() {
-        const tableContainer = document.getElementById('docentesTableContainer');
-        if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
-            tableContainer.style.display = 'block';
-            this.textContent = 'Ocultar lista de docentes'; // Cambia el texto del botón
-        } else {
-            tableContainer.style.display = 'none';
-            this.textContent = 'Ver lista de docentes'; // Vuelve al texto original
-        }
-    });
-
     // Función para editar un docente
     window.editDocente = function(codigo) {
-        fetch(`/api/docentes/${codigo}`)
+        fetch(`https://control-asistencia-docentes.onrender.com/api/docentes/${codigo}`)
             .then(response => response.json())
             .then(docente => {
                 document.getElementById('codigo').value = docente.Codigo;
@@ -170,10 +132,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para eliminar un docente
     window.deleteDocente = function(codigo) {
-        fetch(`/api/docentes/${codigo}`, {
+        fetch(`https://control-asistencia-docentes.onrender.com/api/docentes/${codigo}`, {
             method: 'DELETE',
         }).then(() => loadDocentes());
     };
+
+    document.getElementById('toggleButton').addEventListener('click', function() {
+        const tableContainer = document.getElementById('docentesTableContainer');
+        if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
+            tableContainer.style.display = 'block';
+            this.textContent = 'Ocultar lista de docentes'; // Cambia el texto del botón
+        } else {
+            tableContainer.style.display = 'none';
+            this.textContent = 'Ver lista de docentes'; // Vuelve al texto original
+        }
+    });
 
     // Cargar los docentes al iniciar
     loadDocentes();
