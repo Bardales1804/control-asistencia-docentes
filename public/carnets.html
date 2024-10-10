@@ -65,8 +65,8 @@
                     <li><a href="/permisos.html">Permisos</a></li>
                     <li><a href="planilla.html">Planilla</a></li>
                 </ul>
-                <style>
-                /* Estilos originales */
+            </nav>
+            <style>
                 body {
                     background-color: #f0f0f0;
                     font-family: Arial, sans-serif;
@@ -75,8 +75,8 @@
                 }
                 
                 .container {
-                    width: 80%; /* Ancho ajustado para que coincida con tu diseño */
-                    margin: 20px auto; /* Centrado con margen superior */
+                    width: 80%;
+                    margin: 20px auto;
                     padding: 20px;
                     background-color: white;
                     border-radius: 8px;
@@ -88,7 +88,6 @@
                     color: blue;
                     font-family: 'Montserrat', sans-serif;
                 }
-                
                 
                 .date-navigation {
                     display: flex;
@@ -139,16 +138,15 @@
                     font-size: 0.95rem;
                 }
                 
-                /* Estilo del campo de entrada de código (scanner) */
                 .input-container {
                     text-align: center;
-                    margin-top: 20px; /* Separación entre la tabla y el input */
+                    margin-top: 20px;
                 }
                 
                 #scannerInput {
                     display: inline-block;
                     padding: 10px;
-                    width: 300px; /* Ajustar el ancho del campo */
+                    width: 300px;
                     border-radius: 8px;
                     border: 1px solid #ddd;
                     font-size: 16px;
@@ -156,7 +154,6 @@
                     outline: none;
                 }
                 
-                /* Responsividad para pantallas pequeñas */
                 @media (max-width: 768px) {
                     .container {
                         width: 95%;
@@ -174,347 +171,240 @@
                     }
                 
                     #scannerInput {
-                        width: 100%; /* Ocupa todo el ancho disponible en pantallas pequeñas */
+                        width: 100%;
                     }
                 }
             </style>
-                <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 
-                <h1>Generador y Lector de Códigos de Barras</h1>
-            
-                <!-- Formulario para Generar Carnet -->
-                <div class="form-group">
-                    <label for="docenteSelect">Selecciona el docente:</label>
-                    <select id="docenteSelect">
-                        <option value="">-- Selecciona un docente --</option>
-                        <!-- Opciones se llenarán dinámicamente -->
-                    </select>
-                </div>
-            
-                <div class="form-group">
-                    <label for="barcodeFormat">Selecciona el formato del código de barras:</label>
-                    <select id="barcodeFormat">
-                        <option value="CODE128">CODE128</option>
-                        <option value="EAN13">EAN13</option>
-                        <!-- Agrega más formatos según tus necesidades -->
-                    </select>
-                </div>
-            
-                <div class="form-group">
-                    <label for="barcodeValue">Ingresa el código:</label>
-                    <input type="text" id="barcodeValue" placeholder="Ingrese el código aquí">
-                </div>
-            
-                <!-- Nuevos campos para fechas y descripción -->
-                <div class="form-group">
-                    <label for="fechaEmision">Fecha de Emisión:</label>
-                    <input type="date" id="fechaEmision">
-                </div>
-            
-                <div class="form-group">
-                    <label for="fechaVencimiento">Fecha de Vencimiento:</label>
-                    <input type="date" id="fechaVencimiento">
-                </div>
-            
-                <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <input type="text" id="descripcion" placeholder="Ingrese una descripción">
-                </div>
-            
-                <button id="generateButton" style="background-color: #ffff00; /* Color verde */color: black; /* Texto blanco */border: none;padding: 10px 20px;font-size: 16px;border-radius: 5px;cursor: pointer;transition: background-color 0.3s ease;">Generar Código de Barras</button>            
-                <!-- Área para Mostrar el Código de Barras -->
-                <div id="barcode">
-                    <canvas id="barcodeCanvas" width="300" height="100"></canvas>
-                </div>
-            
-                <button id="printButton" style="display:none;"></button>
-            
-                <!-- Tabla de Carnets Generados -->
-                <h2>Lista de Carnets Generados</h2>
-                <table id="carnetsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Docente</th>
-                            <th>Código</th>
-                            <th>Número de Carnet</th>
-                            <th>Fecha de Emisión</th>
-                            <th>Fecha de Vencimiento</th>
-                            <th>Descripción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Se llenará dinámicamente -->
-                    </tbody>
-                </table>
-            
-                <!-- Scripts JavaScript -->
-                <script>
-                    // Función para cargar los docentes en el selector
-                    async function cargarDocentes() {
-                        try {
-                            const response = await fetch('http://localhost:4000/api/docentes');
-                            if (response.ok) {
-                                const docentes = await response.json();
-                                const select = document.getElementById('docenteSelect');
-                                docentes.forEach(docente => {
-                                    const option = document.createElement('option');
-                                    option.value = docente.Codigo;
-                                    option.textContent = `${docente.Nombres} ${docente.Apellidos} (${docente.Correo_electronico})`;
-                                    select.appendChild(option);
-                                });
-                            } else {
-                                console.error('Error al cargar los docentes:', response.statusText);
-                            }
-                        } catch (error) {
-                            console.error('Error al comunicarse con la API de docentes:', error);
-                        }
-                    }
-            
-                    // Función para validar el código según el formato
-                    function esValidoParaFormato(noCarnet, format) {
-                        const regex = {
-                            'CODE128': /.*/, // cualquier cosa
-                            'EAN13': /^\d{12}$/, // 12 dígitos
-                            'UPC': /^\d{11}$/ // 11 dígitos
-                            // Agrega más formatos según tus necesidades
-                        };
-                        return regex[format] ? regex[format].test(noCarnet) : false;
-                    }
-            
-                    // Función para generar y mostrar el código de barras en Canvas
-                    function generarBarcode(value, format) {
-                        try {
-                            const canvas = document.getElementById('barcodeCanvas');
-                            // Limpiar el canvas antes de dibujar
-                            const ctx = canvas.getContext('2d');
-                            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-                            JsBarcode(canvas, value, { format: format, displayValue: true });
-                            console.log(`Código de barras generado: ${value} con formato ${format}`);
-                        } catch (error) {
-                            alert('Error al generar el código de barras: ' + error.message);
-                            console.error('Error al generar el código de barras:', error);
-                        }
-                    }
-            
-                    // Función para imprimir el código de barras
-                    function imprimirBarcode() {
-                        const printContents = document.getElementById('barcode').innerHTML;
-                        const originalContents = document.body.innerHTML;
-            
-                        document.body.innerHTML = printContents;
-                        window.print();
-                        document.body.innerHTML = originalContents;
-                        location.reload(); // Recargar la página para restaurar el contenido
-                    }
-            
-                    // Función para convertir Canvas a PNG y descargar
-                    function descargarBarcode(carnetId, codigo, formato) {
-                        try {
-                            // Crear un canvas temporal
-                            const tempCanvas = document.createElement('canvas');
-                            tempCanvas.width = 300; // Ancho del canvas
-                            tempCanvas.height = 100; // Alto del canvas
-                            const tempCtx = tempCanvas.getContext('2d');
-            
-                            // Generar el código de barras en el canvas temporal
-                            JsBarcode(tempCanvas, codigo, { format: formato, displayValue: true });
-            
-                            // Obtener el PNG del canvas
-                            const pngData = tempCanvas.toDataURL('image/png');
-                            console.log(`PNG generado para carnet ${carnetId}:`, pngData);
-            
-                            // Crear un enlace para descargar el PNG
-                            const link = document.createElement('a');
-                            link.href = pngData;
-                            link.download = `carnet_${carnetId}.png`;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        } catch (error) {
-                            console.error('Error al convertir Canvas a PNG:', error);
-                            alert('Ocurrió un error al descargar el carnet.');
-                        }
-                    }
-            
-                    // Función para cargar y mostrar todos los carnets
-                    async function cargarCarnets() {
-                        try {
-                            const response = await fetch('http://localhost:4000/carnets');
-                            if (response.ok) {
-                                const carnets = await response.json();
-                                const tbody = document.getElementById('carnetsTable').querySelector('tbody');
-                                tbody.innerHTML = ''; // Limpiar tabla
-            
-                                carnets.forEach(carnet => {
-                                    // Extraer el formato de la descripción
-                                    const match = carnet.Descripcion.match(/formato\s+(\w+)/i);
-                                    const formato = match ? match[1].toUpperCase() : 'CODE128';
-            
-                                    const tr = document.createElement('tr');
-                                    tr.innerHTML = `
-                                        <td>${carnet.Id_carnet}</td>
-                                        <td>${carnet.Nombres} ${carnet.Apellidos}</td>
-                                        <td>${carnet.Codigo}</td>
-                                        <td>${carnet.No_carnet}</td>
-                                        <td>${carnet.Fecha_emision}</td>
-                                        <td>${carnet.Fecha_vencimiento}</td>
-                                        <td>${carnet.Descripcion}</td>
-                                        <td>
-                                            <button class="deleteButton" data-id="${carnet.Id_carnet}" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;">
-                                                🗑️ Eliminar
-                                            </button>
-                                            <button class="downloadButton" data-id="${carnet.Id_carnet}" data-codigo="${carnet.No_carnet}" data-formato="${formato}" style="background-color: #ffff00; color: black; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;">
-                                                💾 Descargar
-                                            </button>
-                                        </td>
-                                    `;
-                                    tbody.appendChild(tr);
-                                });
-            
-                                // Añadir eventos a los botones de eliminar
-                                document.querySelectorAll('.deleteButton').forEach(button => {
-                                    button.addEventListener('click', async (event) => {
-                                        const id_carnet = event.target.getAttribute('data-id');
-                                        if (confirm('¿Estás seguro de que deseas eliminar este carnet?')) {
-                                            try {
-                                                const deleteResponse = await fetch(`http://localhost:4000/carnets/${id_carnet}`, {
-                                                    method: 'DELETE'
-                                                });
-                                                if (deleteResponse.ok) {
-                                                    alert('Carnet eliminado exitosamente.');
-                                                    cargarCarnets(); // Recargar la tabla de carnets
-                                                } else {
-                                                    const errorData = await deleteResponse.json();
-                                                    alert(`Error al eliminar el carnet: ${errorData.message}`);
-                                                }
-                                            } catch (error) {
-                                                console.error('Error al comunicarse con la API:', error);
-                                                alert('Ocurrió un error al eliminar el carnet.');
-                                            }
-                                        }
-                                    });
-                                });
-            
-                                // Añadir eventos a los botones de descargar
-                                document.querySelectorAll('.downloadButton').forEach(button => {
-                                    button.addEventListener('click', async (event) => {
-                                        const carnetId = event.target.getAttribute('data-id');
-                                        const codigo = event.target.getAttribute('data-codigo');
-                                        const formato = event.target.getAttribute('data-formato');
-            
-                                        console.log(`Descargando carnet ID: ${carnetId}, Código: ${codigo}, Formato: ${formato}`);
-            
-                                        // Validar que el código sea válido para el formato
-                                        if (!esValidoParaFormato(codigo, formato)) {
-                                            alert(`El código ingresado no es válido para el formato ${formato}.`);
-                                            console.log(`Validación fallida: Código ${codigo} no es válido para el formato ${formato}`);
-                                            return;
-                                        }
-            
-                                        // Descargar el código de barras como PNG
-                                        descargarBarcode(carnetId, codigo, formato);
-                                    });
-                                });
-                            } else {
-                                console.error('Error al cargar los carnets:', response.statusText);
-                            }
-                        } catch (error) {
-                            console.error('Error al comunicarse con la API:', error);
-                        }
-                    }
-            
-                    // Evento para el botón de generar carnet
-                    document.getElementById('generateButton').addEventListener('click', async () => {
-                        const docenteCodigo = document.getElementById('docenteSelect').value;
-                        const format = document.getElementById('barcodeFormat').value;
-                        const value = document.getElementById('barcodeValue').value.trim();
-                        const fechaEmision = document.getElementById('fechaEmision').value;
-                        const fechaVencimiento = document.getElementById('fechaVencimiento').value;
-                        const descripcion = document.getElementById('descripcion').value.trim();
-            
-                        // Validaciones
-                        if (!docenteCodigo) {
-                            alert('Por favor, selecciona un docente.');
-                            return;
-                        }
-            
-                        if (!value) {
-                            alert('Por favor, ingresa un código.');
-                            return;
-                        }
-            
-                        if (!fechaEmision) {
-                            alert('Por favor, selecciona la fecha de emisión.');
-                            return;
-                        }
-            
-                        if (!fechaVencimiento) {
-                            alert('Por favor, selecciona la fecha de vencimiento.');
-                            return;
-                        }
-            
-                        if (new Date(fechaVencimiento) <= new Date(fechaEmision)) {
-                            alert('La fecha de vencimiento debe ser posterior a la fecha de emisión.');
-                            return;
-                        }
-            
-                        // Validar si el 'value' es válido para el formato seleccionado
-                        if (!esValidoParaFormato(value, format)) {
-                            alert(`El código ingresado no es válido para el formato ${format}.`);
-                            console.log(`Validación fallida: Código ${value} no es válido para el formato ${format}`);
-                            return;
-                        }
-            
-                        // Generar y mostrar el código de barras
-                        generarBarcode(value, format);
-            
-                        // Mostrar el botón de imprimir
-                        document.getElementById('printButton').style.display = 'inline-block';
-            
-                        // Crear el objeto carnet
-                        const carnet = {
-                            Codigo: parseInt(docenteCodigo),
-                            No_carnet: value,
-                            Fecha_emision: fechaEmision,
-                            Fecha_vencimiento: fechaVencimiento,
-                            Descripcion: descripcion || `Carnet generado con formato ${format}`
-                        };
-            
-                        try {
-                            // Enviar el carnet a la API para guardar en la base de datos
-                            const response = await fetch('http://localhost:4000/carnets', { // Asegúrate de que esta URL sea correcta
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(carnet)
+            <h1>Generador y Lector de Códigos de Barras</h1>
+        
+            <div class="form-group">
+                <label for="docenteSelect">Selecciona el docente:</label>
+                <select id="docenteSelect">
+                    <option value="">-- Selecciona un docente --</option>
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="barcodeFormat">Selecciona el formato del código de barras:</label>
+                <select id="barcodeFormat">
+                    <option value="CODE128">CODE128</option>
+                    <option value="EAN13">EAN13</option>
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="barcodeValue">Ingresa el código:</label>
+                <input type="text" id="barcodeValue" placeholder="Ingrese el código aquí">
+            </div>
+        
+            <div class="form-group">
+                <label for="fechaEmision">Fecha de Emisión:</label>
+                <input type="date" id="fechaEmision">
+            </div>
+        
+            <div class="form-group">
+                <label for="fechaVencimiento">Fecha de Vencimiento:</label>
+                <input type="date" id="fechaVencimiento">
+            </div>
+        
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" placeholder="Ingrese una descripción">
+            </div>
+        
+            <button id="generateButton" style="background-color: #ffff00; color: black; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">Generar Código de Barras</button>            
+            <div id="barcode">
+                <canvas id="barcodeCanvas" width="300" height="100"></canvas>
+            </div>
+        
+            <button id="printButton" style="display:none;"></button>
+        
+            <h2>Lista de Carnets Generados</h2>
+            <table id="carnetsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Docente</th>
+                        <th>Código</th>
+                        <th>Número de Carnet</th>
+                        <th>Fecha de Emisión</th>
+                        <th>Fecha de Vencimiento</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <script>
+                async function cargarDocentes() {
+                    try {
+                        const response = await fetch('https://control-asistencia-docentes.onrender.com/api/docentes');
+                        if (response.ok) {
+                            const docentes = await response.json();
+                            const select = document.getElementById('docenteSelect');
+                            docentes.forEach(docente => {
+                                const option = document.createElement('option');
+                                option.value = docente.Codigo;
+                                option.textContent = `${docente.Nombres} ${docente.Apellidos} (${docente.Correo_electronico})`;
+                                select.appendChild(option);
                             });
-            
-                            if (response.ok) {
-                                const data = await response.json();
-                                alert('Código de barras generado y carnet asignado exitosamente.');
-                                cargarCarnets(); // Recargar la tabla de carnets
-                            } else {
-                                const errorData = await response.json();
-                                alert(`Error al guardar el carnet: ${errorData.message}`);
-                            }
-                        } catch (error) {
-                            console.error('Error al comunicarse con la API:', error);
-                            alert('Ocurrió un error al guardar el carnet.');
+                        } else {
+                            console.error('Error al cargar los docentes:', response.statusText);
                         }
-                    });
-            
-                    // Evento para el botón de imprimir carnet
-                    document.getElementById('printButton').addEventListener('click', imprimirBarcode);
-            
-                    // Cargar los docentes y carnets al iniciar la página
-                    window.onload = () => {
-                        cargarDocentes();
-                        cargarCarnets();
+                    } catch (error) {
+                        console.error('Error al comunicarse con la API de docentes:', error);
+                    }
+                }
+
+                function esValidoParaFormato(noCarnet, format) {
+                    const regex = {
+                        'CODE128': /.*/,
+                        'EAN13': /^\d{12}$/,
+                        'UPC': /^\d{11}$/
                     };
-                </script>
-            
-            </body>
-            </html>
+                    return regex[format] ? regex[format].test(noCarnet) : false;
+                }
+
+                function generarBarcode(value, format) {
+                    try {
+                        const canvas = document.getElementById('barcodeCanvas');
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        JsBarcode(canvas, value, { format: format, displayValue: true });
+                    } catch (error) {
+                        alert('Error al generar el código de barras: ' + error.message);
+                    }
+                }
+
+                function imprimirBarcode() {
+                    const printContents = document.getElementById('barcode').innerHTML;
+                    const originalContents = document.body.innerHTML;
+                    document.body.innerHTML = printContents;
+                    window.print();
+                    document.body.innerHTML = originalContents;
+                    location.reload();
+                }
+
+                async function cargarCarnets() {
+                    try {
+                        const response = await fetch('https://control-asistencia-docentes.onrender.com/carnets');
+                        if (response.ok) {
+                            const carnets = await response.json();
+                            const tbody = document.getElementById('carnetsTable').querySelector('tbody');
+                            tbody.innerHTML = '';
+                            carnets.forEach(carnet => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${carnet.Id_carnet}</td>
+                                    <td>${carnet.Nombres} ${carnet.Apellidos}</td>
+                                    <td>${carnet.Codigo}</td>
+                                    <td>${carnet.No_carnet}</td>
+                                    <td>${carnet.Fecha_emision}</td>
+                                    <td>${carnet.Fecha_vencimiento}</td>
+                                    <td>${carnet.Descripcion}</td>
+                                    <td>
+                                        <button class="deleteButton" data-id="${carnet.Id_carnet}" style="background-color: #dc3545; color: white;">🗑️ Eliminar</button>
+                                        <button class="downloadButton" data-id="${carnet.Id_carnet}" data-codigo="${carnet.No_carnet}" data-formato="CODE128" style="background-color: #ffff00; color: black;">💾 Descargar</button>
+                                    </td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+
+                            document.querySelectorAll('.deleteButton').forEach(button => {
+                                button.addEventListener('click', async (event) => {
+                                    const id_carnet = event.target.getAttribute('data-id');
+                                    if (confirm('¿Estás seguro de que deseas eliminar este carnet?')) {
+                                        try {
+                                            const deleteResponse = await fetch(`https://control-asistencia-docentes.onrender.com/carnets/${id_carnet}`, {
+                                                method: 'DELETE'
+                                            });
+                                            if (deleteResponse.ok) {
+                                                alert('Carnet eliminado exitosamente.');
+                                                cargarCarnets();
+                                            }
+                                        } catch (error) {
+                                            console.error('Error al eliminar el carnet:', error);
+                                        }
+                                    }
+                                });
+                            });
+
+                            document.querySelectorAll('.downloadButton').forEach(button => {
+                                button.addEventListener('click', async (event) => {
+                                    const carnetId = event.target.getAttribute('data-id');
+                                    const codigo = event.target.getAttribute('data-codigo');
+                                    generarBarcode(codigo, 'CODE128');
+                                    descargarBarcode(carnetId, codigo, 'CODE128');
+                                });
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error al cargar los carnets:', error);
+                    }
+                }
+
+                document.getElementById('generateButton').addEventListener('click', async () => {
+                    const docenteCodigo = document.getElementById('docenteSelect').value;
+                    const format = document.getElementById('barcodeFormat').value;
+                    const value = document.getElementById('barcodeValue').value.trim();
+                    const fechaEmision = document.getElementById('fechaEmision').value;
+                    const fechaVencimiento = document.getElementById('fechaVencimiento').value;
+                    const descripcion = document.getElementById('descripcion').value.trim();
+
+                    if (!docenteCodigo || !value || !fechaEmision || !fechaVencimiento) {
+                        alert('Por favor, completa todos los campos.');
+                        return;
+                    }
+
+                    if (new Date(fechaVencimiento) <= new Date(fechaEmision)) {
+                        alert('La fecha de vencimiento debe ser posterior a la fecha de emisión.');
+                        return;
+                    }
+
+                    if (!esValidoParaFormato(value, format)) {
+                        alert(`El código ingresado no es válido para el formato ${format}.`);
+                        return;
+                    }
+
+                    generarBarcode(value, format);
+                    document.getElementById('printButton').style.display = 'inline-block';
+
+                    const carnet = {
+                        Codigo: parseInt(docenteCodigo),
+                        No_carnet: value,
+                        Fecha_emision: fechaEmision,
+                        Fecha_vencimiento: fechaVencimiento,
+                        Descripcion: descripcion || `Carnet generado con formato ${format}`
+                    };
+
+                    try {
+                        const response = await fetch('https://control-asistencia-docentes.onrender.com/carnets', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(carnet)
+                        });
+
+                        if (response.ok) {
+                            alert('Carnet generado exitosamente.');
+                            cargarCarnets();
+                        }
+                    } catch (error) {
+                        console.error('Error al generar el carnet:', error);
+                    }
+                });
+
+                document.getElementById('printButton').addEventListener('click', imprimirBarcode);
+
+                window.onload = () => {
+                    cargarDocentes();
+                    cargarCarnets();
+                };
+            </script>
+
+        </div>
+    </div>
+</body>
+</html>
