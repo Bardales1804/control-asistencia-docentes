@@ -4,38 +4,41 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 4000;  // Cambié esta línea para que use el puerto de Railway si está disponible
+const port = 4000;
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
+const day = String(now.getDate()).padStart(2, '0');
+const fechaEscaneo = `${year}-${month}-${day}`; // Formato YYYY-MM-DD en hora local
+
+const hour = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+const seconds = String(now.getSeconds()).padStart(2, '0');
+const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora local
 
 // Ruta para servir login.html en la raíz '/'
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+
+
 // Configuración de middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({
-    origin: '*'  // Permite todas las solicitudes. Cambia esto si quieres limitarlo a tu frontend
-}));
+app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
+app.use(cors());
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'autorack.proxy.rlwy.net', 
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'qCuLHkjNozzijLtZndywbzriKjmyZDcd',
-    database: process.env.DB_NAME || 'railway',
-    port: process.env.DB_PORT || 10266
+    host: 'autorack.proxy.rlwy.net',
+    user: 'root',
+    password: 'qCuLHkjNozzijLtZndywbzriKjmyZDcd',
+    database: 'railway',
+    port: 10266
 });
 
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Error conectando a la base de datos:', err);
-    } else {
-        console.log('Conexión a la base de datos establecida con éxito');
-        connection.release();
-    }
-});
 
 // Función para ejecutar consultas
 const query = (sql, values) => {
@@ -47,14 +50,13 @@ const query = (sql, values) => {
     });
 };
 
-module.exports = pool;
+module.exports = pool; 
 
 
 // =====================
 // Rutas de la API Docentes
 // =====================
 app.get('/api/docentes', async (req, res) => {
-    console.log('Solicitando datos de docentes...');
     try {
         const docentes = await query('SELECT * FROM Docentes');
         res.json(docentes);
@@ -557,7 +559,6 @@ app.use('/barcodes', express.static(path.join(__dirname, 'public', 'barcodes')))
 // =====================
 // Iniciar el servidor
 // =====================
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Servidor escuchando en el puerto ${port}`);
+app.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-
