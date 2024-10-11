@@ -4,44 +4,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = 4000;
-const now = new Date();
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth() retorna 0-11
-const day = String(now.getDate()).padStart(2, '0');
-const fechaEscaneo = `${year}-${month}-${day}`; // Formato YYYY-MM-DD en hora local
-
-const hour = String(now.getHours()).padStart(2, '0');
-const minutes = String(now.getMinutes()).padStart(2, '0');
-const seconds = String(now.getSeconds()).padStart(2, '0');
-const horaEscaneo = `${hour}:${minutes}:${seconds}`; // Formato HH:MM:SS en hora local
-
-// Ruta para servir login.html en la raíz '/'
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Error conectando a la base de datos:', err);
-    } else {
-        console.log('Conexión a la base de datos establecida con éxito');
-        connection.release();
-    }
-});
-
+const port = process.env.PORT || 4000;  // Usa el puerto de entorno si está disponible
 
 // Configuración de middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
-app.use(cors({
-    origin: '*'  // Permite todas las solicitudes
-}));
-
-fetch('https://control-asistencia-docentes.onrender.com/api/docentes')
-
+app.use(cors());
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
@@ -52,6 +21,20 @@ const pool = mysql.createPool({
     port: 10266
 });
 
+// Verificar la conexión a la base de datos
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('Error conectando a la base de datos:', err);
+    } else {
+        console.log('Conexión a la base de datos establecida con éxito');
+        connection.release();
+    }
+});
+
+// Ruta para servir login.html en la raíz '/'
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
 // Función para ejecutar consultas
 const query = (sql, values) => {
@@ -63,7 +46,7 @@ const query = (sql, values) => {
     });
 };
 
-module.exports = pool; 
+module.exports = pool;
 
 
 // =====================
