@@ -21,6 +21,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('Error conectando a la base de datos:', err);
+    } else {
+        console.log('Conexión a la base de datos establecida con éxito');
+        connection.release();
+    }
+});
 
 
 // Configuración de middleware
@@ -28,7 +36,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public')); // Asegúrate de que las imágenes y el código HTML estén servidos de forma estática
-app.use(cors());
+app.use(cors({
+    origin: '*'  // Permite todas las solicitudes
+}));
+
+fetch('https://control-asistencia-docentes.onrender.com/api/docentes')
+
 
 // Configurar conexión a la base de datos MySQL utilizando un pool
 const pool = mysql.createPool({
